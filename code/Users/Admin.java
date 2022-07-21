@@ -3,7 +3,7 @@ package Users;
 
 import java.util.Scanner;
 
-public class Admin {
+public class Admin extends Guess{
 
     public static void showAllUser () {
         for (Member member : Member.allMember) {
@@ -21,7 +21,8 @@ public class Admin {
             System.out.println();
             System.out.println("Choose your actions: ");
             System.out.println("1: Show all users");
-            System.out.println("2: Show more things");
+            System.out.println("2: Show all items and its details");
+            System.out.println("3: Show all items by category");
             System.out.println("0: Logout");
             System.out.println();
             System.out.printf("Your input: ");
@@ -32,9 +33,9 @@ public class Admin {
             } else if (input == 1) {
                 showAllUser();
             } else if (input == 2) {
-                System.out.println("Developing");
-            } else {
-                System.out.println("There is an error");
+                Guess.showAllItemsDetails();
+            } else if (input == 3){
+                Guess.showAllItemsCategory();
             }
         }
     }

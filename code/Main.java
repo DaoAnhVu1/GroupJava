@@ -5,9 +5,14 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.util.Scanner;
 
+import Products.Product;
+
 
 public class Main {
     public static void main(String[] args) {
+        loadProductData("./data/console.csv");
+        loadProductData("./data/CPU.csv");
+        loadProductData("./data/GPU.csv");
         loadMemberData();
         Scanner sc = new Scanner(System.in);
         System.out.println("Please choose one of the following options");
@@ -16,11 +21,13 @@ public class Main {
             System.out.println();
             System.out.println("1: Login and proceed");
             System.out.println("2: Register");
-            System.out.println("3: Show all items and details: ");
-            System.out.println("4: Show all items by category: ");
-            System.out.println("5: Show all items by price: ");
+            System.out.println("3: Show all items and details");
+            System.out.println("4: Show all items by category");
+            System.out.println("5: Show all items by price");
             System.out.println("0: Exit");
+            System.out.println();
             int input = sc.nextInt();
+            System.out.println();
             if (input == 0) {
                 System.exit(0);
             } else if (input == 1) {
@@ -37,9 +44,9 @@ public class Main {
                 Register.start();
             }  else if (input == 3) {
                  Guess.showAllItemsDetails();
-            } // else if (input == 4) {
-            //     Guess.showAllItemsCategory();
-            // } else if (input == 5) {
+            }  else if (input == 4) {
+                 Guess.showAllItemsCategory();
+             } // else if (input == 5) {
             //     Guess.showAllItemsPrice();
             // }
         }
@@ -69,7 +76,26 @@ public class Main {
         }
     }
 
-    // public static void loadProductData() {
-        
-    // }
+    public static void loadProductData(String filePath) {
+        String fullFileName = filePath.substring(7);
+        String category = fullFileName.split("\\.")[0];
+        BufferedReader reader = null;
+        String line = "";
+        try {
+            reader = new BufferedReader(new FileReader(filePath));
+            while ((line = reader.readLine()) != null) {
+                String[] row = line.split(",");
+                String productId = row[0];
+                String productName = row[1];
+                Double productPrice = Double.parseDouble(row[2]);
+                String productCategory = category;
+                int productQuantity = Integer.parseInt(row[3]);
+
+                Product product = new Product(productId, productName, productPrice, productCategory, productQuantity);
+            }
+            reader.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 }

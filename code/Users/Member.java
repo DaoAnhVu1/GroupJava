@@ -4,14 +4,14 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Member extends Guess{
-    private String memberId;
+    private final String memberId;
     private String memberName;
     private String memberPassword;
     private String memberPhone;
     private String memberEmail;
     private String memberAddress;
     private double memberMoneySpent;
-    public static ArrayList<Member> allMember = new ArrayList<Member>();
+    public static ArrayList<Member> allMember = new ArrayList<>();
 
     public Member(String memberId, String memberName, String memberPassword, String memberPhone,
             String memberEmail, String memberAddress, double memberMoneySpent) {
@@ -27,10 +27,6 @@ public class Member extends Guess{
 
     public String getMemberId() {
         return memberId;
-    }
-
-    public void setMemberId(String memberId) {
-        this.memberId = memberId;
     }
 
     public String getMemberName() {
@@ -89,6 +85,7 @@ public class Member extends Guess{
             System.out.println("Choose what you want to do: ");
             System.out.println("1: Your Info");
             System.out.println("2: Show all items by details: ");
+            System.out.println("3: Show items by category");
             System.out.println("0: Logout");
             System.out.println();
             System.out.print("Your input: ");
@@ -100,6 +97,8 @@ public class Member extends Guess{
                 this.showAllInfo();
             } else if (input == 2) {
                 Guess.showAllItemsDetails();
+            } else if (input == 3) {
+                Guess.showAllItemsCategory();
             }
         }
     }
