@@ -1,8 +1,6 @@
-package code;
-
 import java.util.Scanner;
 
-import code.Users.Customer;
+import Users.Member;
 
 public class Login {
     public static int start() {
@@ -12,14 +10,15 @@ public class Login {
         System.out.println();
         System.out.print("Enter the password: ");
         String password = sc.nextLine();
+        System.out.println();
         int indexOfUser = 0;
 
         if (userName.equals("admin") && password.equals("adminpassword")) {
             return -2;
         }
 
-        for (Customer customer : Customer.allCustomer) {
-            if (userName.equals(customer.getCustomerName()) && password.equals(customer.getCustomerPassword())) {
+        for (Member member : Member.allMember) {
+            if (userName.equals(member.getMemberName()) && password.equals(member.getMemberPassword())) {
                 return indexOfUser;
             }
             indexOfUser += 1;

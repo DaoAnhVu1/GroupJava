@@ -1,21 +1,24 @@
-package code;
+import Users.*;
 
-import code.Users.Admin;
-import code.Users.Customer;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.util.Scanner;
 
+
 public class Main {
     public static void main(String[] args) {
-        loadCustomerData();
+        loadMemberData();
         Scanner sc = new Scanner(System.in);
         System.out.println("Please choose one of the following options");
 
         while (true) {
+            System.out.println();
             System.out.println("1: Login and proceed");
             System.out.println("2: Register");
+            System.out.println("3: Show all items and details: ");
+            System.out.println("4: Show all items by category: ");
+            System.out.println("5: Show all items by price: ");
             System.out.println("0: Exit");
             int input = sc.nextInt();
             if (input == 0) {
@@ -27,37 +30,46 @@ public class Main {
                 } else if (typeOfUser == -1) {
                     System.out.println("No user found");
                 } else {
-                    Customer currentUser = Customer.allCustomer.get(typeOfUser);
-                    currentUser.customerStart();
+                    Member currentUser = Member.allMember.get(typeOfUser);
+                    currentUser.memberStart();
                 }
             } else if (input == 2) {
                 Register.start();
-            }
+            }  else if (input == 3) {
+                 Guess.showAllItemsDetails();
+            } // else if (input == 4) {
+            //     Guess.showAllItemsCategory();
+            // } else if (input == 5) {
+            //     Guess.showAllItemsPrice();
+            // }
         }
     }
 
-    public static void loadCustomerData() {
-        String filePath = "./data/customer.csv";
+    public static void loadMemberData() {
+        String filePath = "./data/member.csv";
         BufferedReader reader = null;
         String line = "";
         try {
             reader = new BufferedReader(new FileReader(filePath));
             while ((line = reader.readLine()) != null) {
                 String[] row = line.split(",");
-
-                String customerId = row[0];
-                String customerName = row[1];
-                String customerPassword = row[2];
-                String customerPhone = row[3];
-                String customerEmail = row[4];
-                String customerAddress = row[5];
-                double customerMoneySpent = Double.parseDouble(row[6]);
-                Customer customer = new Customer(customerId, customerName, customerPassword, customerPhone,
-                        customerEmail, customerAddress, customerMoneySpent);
+                String memberId = row[0];
+                String memberName = row[1];
+                String memberPassword = row[2];
+                String memberPhone = row[3];
+                String memberEmail = row[4];
+                String memberAddress = row[5];
+                double memberMoneySpent = Double.parseDouble(row[6]);
+                Member member = new Member(memberId, memberName, memberPassword, memberPhone,
+                        memberEmail, memberAddress, memberMoneySpent);
             }
             reader.close();
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
+
+    // public static void loadProductData() {
+        
+    // }
 }

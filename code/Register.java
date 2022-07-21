@@ -1,14 +1,10 @@
-package code;
-
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.PrintWriter;
 import java.util.Scanner;
 import java.util.UUID;
 
-import javax.swing.JOptionPane;
-
-import code.Users.Customer;
+import Users.Member;
 
 public class Register {
     public static void start() {
@@ -32,7 +28,7 @@ public class Register {
 
         try {
             System.out.println("Start");
-            FileWriter fw = new FileWriter("./data/customer.csv", true);
+            FileWriter fw = new FileWriter("./data/Member.csv", true);
             BufferedWriter bw = new BufferedWriter(fw);
             PrintWriter pw = new PrintWriter(bw);
 
@@ -45,6 +41,6 @@ public class Register {
             e.printStackTrace();
         }
 
-        Customer customer = new Customer(id, userName, password, phone, email, address, 0);
+        Member member = new Member(id, userName, password, phone, email, address, 0);
     }
 }
