@@ -9,7 +9,7 @@ import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
-        loadData();
+        loadCustomerData();
         Scanner sc = new Scanner(System.in);
         System.out.println("Please choose one of the following options");
 
@@ -31,13 +31,12 @@ public class Main {
                     currentUser.customerStart();
                 }
             } else if (input == 2) {
-                System.out.println("Register");
-                // Register.start()
+                Register.start();
             }
         }
     }
 
-    public static void loadData() {
+    public static void loadCustomerData() {
         String filePath = "./data/customer.csv";
         BufferedReader reader = null;
         String line = "";
@@ -56,6 +55,7 @@ public class Main {
                 Customer customer = new Customer(customerId, customerName, customerPassword, customerPhone,
                         customerEmail, customerAddress, customerMoneySpent);
             }
+            reader.close();
         } catch (Exception e) {
             e.printStackTrace();
         }

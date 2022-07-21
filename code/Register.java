@@ -1,5 +1,50 @@
 package code;
 
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.PrintWriter;
+import java.util.Scanner;
+import java.util.UUID;
+
+import javax.swing.JOptionPane;
+
+import code.Users.Customer;
+
 public class Register {
-    
+    public static void start() {
+        String id = UUID.randomUUID().toString();
+        Scanner sc = new Scanner(System.in);
+        System.out.print("Enter your username: ");
+        String userName = sc.nextLine();
+        System.out.println();
+        System.out.print("Enter your password: ");
+        String password = sc.nextLine();
+        System.out.println();
+        System.out.print("Enter your phone: ");
+        String phone = sc.nextLine();
+        System.out.println();
+        System.out.print("Enter your email: ");
+        String email  = sc.nextLine();
+        System.out.println();
+        System.out.print("Enter your address: ");
+        String address = sc.nextLine();
+        System.out.println();
+
+        try {
+            System.out.println("Start");
+            FileWriter fw = new FileWriter("./data/customer.csv", true);
+            BufferedWriter bw = new BufferedWriter(fw);
+            PrintWriter pw = new PrintWriter(bw);
+
+            pw.println(id+","+userName+","+password+","+phone+","+email+","+address+","+0);
+            pw.flush();
+            pw.close();
+            System.out.println("Success");
+            
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        Customer customer = new Customer(id, userName, password, phone, email, address, 0);
+    }
 }
