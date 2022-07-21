@@ -86,6 +86,7 @@ public class Member extends Guess{
             System.out.println("1: Your Info");
             System.out.println("2: Show all items by details: ");
             System.out.println("3: Show items by category");
+            System.out.println("4: Show items by price");
             System.out.println("0: Logout");
             System.out.println();
             System.out.print("Your input: ");
@@ -99,6 +100,8 @@ public class Member extends Guess{
                 Guess.showAllItemsDetails();
             } else if (input == 3) {
                 Guess.showAllItemsCategory();
+            } else if (input == 4) {
+                Guess.showAllItemsByPrice();
             }
         }
     }

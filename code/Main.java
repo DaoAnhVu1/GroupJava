@@ -1,16 +1,14 @@
 import Users.*;
 
-
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.util.Scanner;
 
 import Products.Product;
 
-
 public class Main {
     public static void main(String[] args) {
-        loadProductData("./data/console.csv");
+        loadProductData("./data/Console.csv");
         loadProductData("./data/CPU.csv");
         loadProductData("./data/GPU.csv");
         loadMemberData();
@@ -42,13 +40,13 @@ public class Main {
                 }
             } else if (input == 2) {
                 Register.start();
-            }  else if (input == 3) {
-                 Guess.showAllItemsDetails();
-            }  else if (input == 4) {
-                 Guess.showAllItemsCategory();
-             } // else if (input == 5) {
-            //     Guess.showAllItemsPrice();
-            // }
+            } else if (input == 3) {
+                Guess.showAllItemsDetails();
+            } else if (input == 4) {
+                Guess.showAllItemsCategory();
+            } else if (input == 5) {
+                Guess.showAllItemsByPrice();
+            }
         }
     }
 

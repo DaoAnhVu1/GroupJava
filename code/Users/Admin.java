@@ -23,6 +23,7 @@ public class Admin extends Guess{
             System.out.println("1: Show all users");
             System.out.println("2: Show all items and its details");
             System.out.println("3: Show all items by category");
+            System.out.println("4: Show all items by price");
             System.out.println("0: Logout");
             System.out.println();
             System.out.printf("Your input: ");
@@ -36,6 +37,8 @@ public class Admin extends Guess{
                 Guess.showAllItemsDetails();
             } else if (input == 3){
                 Guess.showAllItemsCategory();
+            } else if (input == 4) {
+                Guess.showAllItemsByPrice();
             }
         }
     }
