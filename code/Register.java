@@ -27,7 +27,6 @@ public class Register {
         System.out.println();
 
         try {
-            System.out.println("Start");
             FileWriter fw = new FileWriter("./data/Member.csv", true);
             BufferedWriter bw = new BufferedWriter(fw);
             PrintWriter pw = new PrintWriter(bw);
