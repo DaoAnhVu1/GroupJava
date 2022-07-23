@@ -41,11 +41,11 @@ public class Main {
             } else if (input == 2) {
                 Register.start();
             } else if (input == 3) {
-                Guess.showAllItemsDetails();
+                Guest.showAllItemsDetails();
             } else if (input == 4) {
-                Guess.showAllItemsCategory();
+                Guest.showAllItemsCategory();
             } else if (input == 5) {
-                Guess.showAllItemsByPrice();
+                Guest.showAllItemsByPrice();
             }
         }
     }

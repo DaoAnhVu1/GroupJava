@@ -5,7 +5,7 @@ import java.util.Scanner;
 
 import Products.Product;
 
-public abstract class Guess {
+public abstract class Guest {
     public static void showAllItemsDetails() {
         System.out.printf("|%-10s|%-25s|%-15s|%-15s|%-5s", "Number ", "Name", "Price", "Category", "Quantity");
         int index = 1;
