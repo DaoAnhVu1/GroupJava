@@ -8,7 +8,7 @@ import Users.Member;
 
 public class Register {
     public static void start() {
-        String id = UUID.randomUUID().toString();
+        String id = UUID.randomUUID().toString().substring(0,8);
         Scanner sc = new Scanner(System.in);
         System.out.print("Enter your username: ");
         String userName = sc.nextLine();

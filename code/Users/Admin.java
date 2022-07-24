@@ -146,7 +146,7 @@ public class Admin extends Guest {
             String productQuantity = sc.nextLine();
             System.out.println();
     
-            String id = UUID.randomUUID().toString();
+            String id = UUID.randomUUID().toString().substring(0,8);
     
     
             try {
