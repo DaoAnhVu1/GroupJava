@@ -13,6 +13,7 @@ public class Main {
         loadProductData("./data/Console.csv");
         loadProductData("./data/CPU.csv");
         loadProductData("./data/GPU.csv");
+        loadProductData("./data/harddrive.csv");
         loadMemberData();
         Scanner sc = new Scanner(System.in);
         System.out.println("Please choose one of the following options");

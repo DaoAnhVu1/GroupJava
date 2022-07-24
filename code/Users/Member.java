@@ -21,6 +21,7 @@ public class Member extends Guest {
     private String memberEmail;
     private String memberAddress;
     private double memberMoneySpent;
+    private String memberLevel;
     public static ArrayList<Member> allMember = new ArrayList<>();
 
     public Member(String memberId, String memberName, String memberPassword, String memberPhone,
@@ -32,6 +33,15 @@ public class Member extends Guest {
         this.memberEmail = memberEmail;
         this.memberAddress = memberAddress;
         this.memberMoneySpent = memberMoneySpent;
+        if (this.memberMoneySpent >= 5000000 && this.memberMoneySpent < 10000000) {
+            this.memberLevel = "Silver";
+        } else if (this.memberMoneySpent >= 10000000 && this.memberMoneySpent < 15000000) {
+            this.memberLevel = "Gold";
+        } else if (this.memberMoneySpent >= 15000000) {
+            this.memberLevel = "Platinum";
+        } else {
+            this.memberLevel = "normal";
+        }
         allMember.add(this);
     }
 
@@ -41,10 +51,6 @@ public class Member extends Guest {
 
     public String getMemberName() {
         return memberName;
-    }
-
-    public void setMemberName(String memberName) {
-        this.memberName = memberName;
     }
 
     public String getMemberPassword() {
@@ -85,6 +91,14 @@ public class Member extends Guest {
 
     public void setMemberMoneySpent(double memberMoneySpent) {
         this.memberMoneySpent = memberMoneySpent;
+    }
+
+    public String getMemberLevel() {
+        return memberLevel;
+    }
+
+    public void setMemberLevel(String memberLevel) {
+        this.memberLevel = memberLevel;
     }
 
     public void memberStart() {
@@ -200,7 +214,7 @@ public class Member extends Guest {
             }
 
             if (!(cart.isEmpty())) {
-                createAndWriteOrder(this.getMemberId(), cart);
+                createAndWriteOrder(this.getMemberId(), this.getMemberLevel(), cart);
             } else {
                 System.out.println("Your cart is empty");
             }
@@ -209,7 +223,7 @@ public class Member extends Guest {
         }
     }
 
-    public void createAndWriteOrder(String memberId,HashMap<Product, Integer> cart) {
+    public void createAndWriteOrder(String memberId,String memberLevel,HashMap<Product, Integer> cart) {
         String orderId = UUID.randomUUID().toString().substring(0,8);
         Date thisDate = new Date();
         SimpleDateFormat dateForm = new SimpleDateFormat("dd/MM/Y");
@@ -219,6 +233,14 @@ public class Member extends Guest {
 
         for (Product product : cart.keySet()) {
             total += product.getProductPrice() * cart.get(product);
+        }
+
+        if (memberLevel.equals("Silver")) {
+            total = total * 0.95;
+        } else if (memberLevel.equals("Gold")) {
+            total = total * 0.9;
+        } else if (memberLevel.equals("Platinum")) {
+            total = total * 0.85;
         }
 
         Order order = new Order(orderId, memberId, dateString, total, status, cart);

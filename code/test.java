@@ -2,19 +2,19 @@
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.UUID;
 
+import Order.Order;
 import Products.Product;
+import Users.Member;
 
 public class test {
     public static void main(String[] args) {
-        for (int i = 0; i < 10; i++) {
-            for (int j = 0; j < 5; j++) {
-                if (j == 2) {
-                    break;
-                }
-            }
-            System.out.println("I is: " + i);
+        Main.loadOrderData();
+        Main.loadMemberData();
+        for (Member member : Member.allMember) {
+            System.out.println(member.getMemberLevel());
         }
     }
 }
