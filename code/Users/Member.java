@@ -149,6 +149,7 @@ public class Member extends Guest {
 
     public void orderProcess() {
         HashMap<Product, Integer> cart = new HashMap<>();
+        ArrayList<String> allChosenCategory = new ArrayList<>();
         Scanner sc = new Scanner(System.in);
         try {
             while (true) {
@@ -174,6 +175,7 @@ public class Member extends Guest {
                 }
 
                 String choosenCategory = Product.categoryList.get(inputCategory - 1);
+                allChosenCategory.add(choosenCategory);
                 ArrayList<Product> choosenList = Product.productMap.get(choosenCategory);
                 indexToShow = 1;
 
@@ -214,7 +216,7 @@ public class Member extends Guest {
             }
 
             if (!(cart.isEmpty())) {
-                createAndWriteOrder(this.getMemberId(), this.getMemberLevel(), cart);
+                createAndWriteOrder(this.getMemberId(), this.getMemberLevel(), cart, allChosenCategory);
             } else {
                 System.out.println("Your cart is empty");
             }
@@ -223,8 +225,8 @@ public class Member extends Guest {
         }
     }
 
-    public void createAndWriteOrder(String memberId,String memberLevel,HashMap<Product, Integer> cart) {
-        String orderId = UUID.randomUUID().toString().substring(0,8);
+    public void createAndWriteOrder(String memberId, String memberLevel, HashMap<Product, Integer> cart, ArrayList<String> allChosenCategory) {
+        String orderId = UUID.randomUUID().toString().substring(0, 8);
         Date thisDate = new Date();
         SimpleDateFormat dateForm = new SimpleDateFormat("dd/MM/Y");
         String dateString = dateForm.format(thisDate);
@@ -244,20 +246,72 @@ public class Member extends Guest {
         }
 
         Order order = new Order(orderId, memberId, dateString, total, status, cart);
-        
+
         try {
+            // Write to order
             FileWriter fw = new FileWriter("./data/Order.csv", true);
             BufferedWriter bw = new BufferedWriter(fw);
             PrintWriter pw = new PrintWriter(bw);
 
-            String result = orderId+","+memberId+","+dateString+","+Double.toString(total)+","+status+",";
+            String result = orderId + "," + memberId + "," + dateString + "," + Double.toString(total) + "," + status
+                    + ",";
 
             for (Product product : cart.keySet()) {
-                result = result.concat(product.getProductId() + ":" + cart.get(product) +",");
+                result = result.concat(product.getProductId() + ":" + cart.get(product) + ",");
             }
 
             result = result.substring(0, result.length() - 1);
             pw.println(result);
+            pw.flush();
+            pw.close();
+        } catch (Exception e) {
+            System.out.println("Something went wrong");
+        }
+
+        try {
+            // Write to Product file;
+            for (String chosenCategory : allChosenCategory) {
+                FileWriter fw = new FileWriter("./data/" + chosenCategory + ".csv");
+                BufferedWriter bw = new BufferedWriter(fw);
+                PrintWriter pw = new PrintWriter(bw);
+
+                for (Product product : Product.productMap.get(chosenCategory)) {
+                    System.out.println(product.getProductName());
+                    pw.println(product.getProductId()+","+product.getProductName()+","+product.getProductPrice()+","+product.getProductQuantity());
+                }
+                pw.flush();
+                pw.close();
+            }
+        } catch (Exception e) {
+            System.out.println("Something went wrong");
+        }
+
+        try {
+            // Write to member
+            FileWriter fw = new FileWriter("./data/member.csv");
+            BufferedWriter bw = new BufferedWriter(fw);
+            PrintWriter pw = new PrintWriter(bw);
+
+            double currentMoneySpent = this.getMemberMoneySpent();
+            this.setMemberMoneySpent(currentMoneySpent + total);
+
+            if (this.getMemberMoneySpent() >= 5000000 && this.getMemberMoneySpent() < 10000000) {
+                this.setMemberLevel("Silver");
+            } else if (this.getMemberMoneySpent() >= 10000000 && this.getMemberMoneySpent() < 15000000) {
+                this.setMemberLevel("Gold");
+            } else if (this.getMemberMoneySpent() >= 15000000) {
+                this.setMemberLevel("Platinum");
+            }
+
+            System.out.println(this.getMemberLevel());
+
+            for (Member member : allMember) {
+                pw.println(
+                        member.getMemberId() + "," + member.getMemberName() + "," + member.getMemberPassword() + ","
+                                + member.getMemberPhone() + "," + member.getMemberEmail() + ","
+                                + member.getMemberAddress() + "," + member.getMemberMoneySpent());
+            }
+
             pw.flush();
             pw.close();
             System.out.println("Sucess");

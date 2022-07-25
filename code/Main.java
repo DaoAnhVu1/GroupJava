@@ -1,19 +1,20 @@
-import Users.*;
+import Order.Order;
+import Products.Product;
+import Users.Admin;
+import Users.Guest;
+import Users.Member;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.util.HashMap;
 import java.util.Scanner;
 
-import Order.Order;
-import Products.Product;
-
 public class Main {
     public static void main(String[] args) {
         loadProductData("./data/Console.csv");
         loadProductData("./data/CPU.csv");
         loadProductData("./data/GPU.csv");
-        loadProductData("./data/harddrive.csv");
+        loadProductData("./data/HardDrive.csv");
         loadMemberData();
         Scanner sc = new Scanner(System.in);
         System.out.println("Please choose one of the following options");
