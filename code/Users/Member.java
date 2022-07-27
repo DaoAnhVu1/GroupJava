@@ -1,5 +1,6 @@
 package Users;
 
+import java.sql.SQLOutput;
 import java.util.Date;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
@@ -113,6 +114,7 @@ public class Member extends Guest {
                 System.out.println("3: Show items by category");
                 System.out.println("4: Show items by price");
                 System.out.println("5: Create an order");
+                System.out.println("6: Get information of an order");
                 System.out.println("0: Logout");
                 System.out.println();
                 System.out.print("Your input: ");
@@ -130,7 +132,10 @@ public class Member extends Guest {
                     Guest.showAllItemsByPrice();
                 } else if (input == 5) {
                     orderProcess();
-                } else {
+                } else if (input == 6) {
+                    this.viewOrder();
+                }
+                    else {
                     System.out.println("Invalid Input");
                 }
             } catch (Exception e) {
@@ -245,7 +250,22 @@ public class Member extends Guest {
             total = total * 0.85;
         }
 
+        public void viewOrder() {
+            Scanner sc = new Scanner(System.in);
+            System.out.println();
+            System.out.print("Enter your order ID: ");
+            int input = sc.nextInt();
+            System.out.println();
+
+            String userChoice = Order.allOrder.get(input - 1);
+            System.out.printf("|%-10s|%-25s|%-15s|%-15s|%-5ss", "OrderID", "MemberID", "Total", "Status", "Items");
+            System.out.println();
+
+            System.out.printf("|%-10s|%-25s|%-15s|%-15s|%-5ss", orderId, memberId, total, status);
+        }
+
         Order order = new Order(orderId, memberId, dateString, total, status, cart);
+
 
         try {
             // Write to order

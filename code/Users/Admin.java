@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.UUID;
 
+import Order.Order;
 import Products.Product;
 
 public class Admin extends Guest {
@@ -23,6 +24,7 @@ public class Admin extends Guest {
             System.out.println("4: Show all items by price");
             System.out.println("5: Change product's price");
             System.out.println("6: Add new product");
+            System.out.println("7: View all orders: ");
             System.out.println("0: Logout");
             System.out.println();
             System.out.printf("Your input: ");
@@ -42,6 +44,8 @@ public class Admin extends Guest {
                 Admin.changeProductPrice();
             } else if (input == 6) {
                 Admin.addNewProduct();
+            } else if (input == 7) {
+                Admin.viewAllOrders();
             }
         }
     }
@@ -168,5 +172,15 @@ public class Admin extends Guest {
         }
        
     }
-
+    public static void viewAllOrders(){
+        for (Order order : Order.allOrder){
+            System.out.println(order.getOrderId());
+            System.out.println(order.getMemberId());
+            System.out.println(order.getOrderDate());
+            System.out.println(order.getTotal());
+            System.out.println(order.getStatus());
+            System.out.println(order.getItems());
+            System.out.println();
+        }
+    }
 }
