@@ -1,7 +1,6 @@
 package Users;
 
 import java.io.*;
-import java.lang.reflect.Array;
 import java.util.*;
 import java.text.SimpleDateFormat;
 
@@ -263,11 +262,9 @@ public class Member extends Guest {
         if (wishList.isEmpty()) {
             System.out.println("Your wishlist is empty");
         } else {
+            Wishlist newWishList = new Wishlist(this.memberId, wishList);
             writeWishlist(this.getMemberId(), wishList);
         }
-
-        Wishlist newWishList = new Wishlist(this.memberId, wishList);
-
     }
 
     public void writeWishlist(String memberID, ArrayList<Product> wishList) {
@@ -294,29 +291,13 @@ public class Member extends Guest {
     }
 
     public void viewWishList() {
-        String filePath = "./data/wishlist.csv";
-        BufferedReader reader = null;
-        String line = "";
-
-        try {
-            reader = new BufferedReader(new FileReader(filePath));
-            while ((line = reader.readLine()) != null) {
-                if (line.contains("ï»¿")) {
-                    line = line.replace("ï»¿", "");
+        for (Wishlist wishlist : Wishlist.allWishList) {
+            if (wishlist.getMemberId().equals(this.getMemberId())) {
+                for (Product product : wishlist.getWishList()) {
+                    System.out.println(product.getProductName());
                 }
-                String[] row = line.split(",");
-                for (String index : row) {
-//                    System.out.printf("%-10s", index);
-                    if (row[0].equals(memberId)) {
-                        System.out.printf("%-10s", index);
-                    }
-                }
-                System.out.println();
+                break;
             }
-            reader.close();
-
-        } catch (Exception e) {
-            e.printStackTrace();
         }
 
     }

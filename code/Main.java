@@ -3,9 +3,11 @@ import Products.Product;
 import Users.Admin;
 import Users.Guest;
 import Users.Member;
+import Wishlist.Wishlist;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Scanner;
 
@@ -16,6 +18,7 @@ public class Main {
         loadProductData("./data/GPU.csv");
         loadProductData("./data/HardDrive.csv");
         loadMemberData();
+        loadWishListData();
         Scanner sc = new Scanner(System.in);
         System.out.println("Please choose one of the following options");
 
@@ -144,6 +147,43 @@ public class Main {
                 }
 
                 Order order = new Order(orderId, memberId, orderDate, total, status, cart);
+            }
+            reader.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void loadWishListData () {
+        String filePath = "./data/wishlist.csv";
+        BufferedReader reader = null;
+        String line = "";
+        try {
+            reader = new BufferedReader(new FileReader(filePath));
+            while ((line = reader.readLine()) != null) {
+                if (line.contains("ï»¿")) {
+                    line = line.replace("ï»¿", "");
+                }
+                String[] row = line.split(",");
+                String memberId = row[0];
+                ArrayList<Product> items = new ArrayList<>();
+
+                for (int i = 1; i < row.length; i++) {
+                    for (String category : Product.categoryList) {
+                        boolean found = false;
+                        for (Product product : Product.productMap.get(category)) {
+                            if (product.getProductId().equals(row[i])) {
+                                items.add(product);
+                                found = true;
+                                break;
+                            }
+                        }
+                        if (found) {
+                            break;
+                        }
+                    }
+                }
+                Wishlist wishlist = new Wishlist(memberId, items);
             }
             reader.close();
         } catch (Exception e) {
