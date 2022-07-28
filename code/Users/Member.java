@@ -1,19 +1,15 @@
 package Users;
 
-import java.util.Date;
-import java.io.BufferedWriter;
-import java.io.FileWriter;
-import java.io.PrintWriter;
+import java.io.*;
+import java.util.*;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Scanner;
-import java.util.UUID;
 
 import Order.Order;
 import Products.Product;
+import Wishlist.Wishlist;
 
 public class Member extends Guest {
+    public static ArrayList<Member> allMember = new ArrayList<>();
     private final String memberId;
     private String memberName;
     private String memberPassword;
@@ -22,7 +18,6 @@ public class Member extends Guest {
     private String memberAddress;
     private double memberMoneySpent;
     private String memberLevel;
-    public static ArrayList<Member> allMember = new ArrayList<>();
 
     public Member(String memberId, String memberName, String memberPassword, String memberPhone,
             String memberEmail, String memberAddress, double memberMoneySpent) {
@@ -113,6 +108,8 @@ public class Member extends Guest {
                 System.out.println("3: Show items by category");
                 System.out.println("4: Show items by price");
                 System.out.println("5: Create an order");
+                System.out.println("6: Create your wishlist");
+                System.out.println("7: View your wishlist");
                 System.out.println("0: Logout");
                 System.out.println();
                 System.out.print("Your input: ");
@@ -130,6 +127,10 @@ public class Member extends Guest {
                     Guest.showAllItemsByPrice();
                 } else if (input == 5) {
                     orderProcess();
+                } else if (input == 6) {
+                    createWishlist();
+                } else if (input == 7) {
+                    viewWishList();
                 } else {
                     System.out.println("Invalid Input");
                 }
@@ -225,6 +226,82 @@ public class Member extends Guest {
         }
     }
 
+    public void createWishlist() {
+        Scanner sc = new Scanner(System.in);
+        ArrayList<Product> wishList = new ArrayList<>();
+        ArrayList<Integer> inputList = new ArrayList<>();
+        Guest.showAllItemsDetails();
+
+        System.out.println();
+
+        while (true) {
+            System.out.println("If you want to stop, press 0");
+            System.out.println("Add a product to your wishlist: ");
+            int inputWishList = sc.nextInt();
+
+            if (inputWishList == 0) {
+                break;
+            }
+
+            if (!(inputWishList > 0 && inputWishList <= Product.allProduct.size())) {
+                System.out.println("Invalid input");
+                return;
+            }
+
+            if (!(inputList.contains(inputWishList))) {
+                inputList.add(inputWishList);
+                Product inputProduct = Product.allProduct.get(inputWishList - 1);
+                wishList.add(inputProduct);
+            } else {
+                System.out.println("This product is already in your wishlist");
+                System.out.println();
+            }
+
+        }
+
+        if (wishList.isEmpty()) {
+            System.out.println("Your wishlist is empty");
+        } else {
+            Wishlist newWishList = new Wishlist(this.memberId, wishList);
+            writeWishlist(this.getMemberId(), wishList);
+        }
+    }
+
+    public void writeWishlist(String memberID, ArrayList<Product> wishList) {
+//        Wishlist memberWishlist = new Wishlist(memberId, wishList);
+
+        try {
+            // Write to wishlist
+            FileWriter fw = new FileWriter("./data/wishlist.csv", true);
+            BufferedWriter bw = new BufferedWriter(fw);
+            PrintWriter pw = new PrintWriter(bw);
+
+            String result = memberId + ",";
+
+            for (Product product : wishList) {
+                result = result.concat(product.getProductId() + ",");
+
+            }
+            pw.println(result);
+            pw.flush();
+            pw.close();
+        } catch (Exception e) {
+            System.out.println("Something went wrong");
+        }
+    }
+
+    public void viewWishList() {
+        for (Wishlist wishlist : Wishlist.allWishList) {
+            if (wishlist.getMemberId().equals(this.getMemberId())) {
+                for (Product product : wishlist.getWishList()) {
+                    System.out.println(product.getProductName());
+                }
+                break;
+            }
+        }
+
+    }
+
     public void createAndWriteOrder(String memberId, String memberLevel, HashMap<Product, Integer> cart, ArrayList<String> allChosenCategory) {
         String orderId = UUID.randomUUID().toString().substring(0, 8);
         Date thisDate = new Date();
@@ -257,7 +334,7 @@ public class Member extends Guest {
                     + ",";
 
             for (Product product : cart.keySet()) {
-                result = result.concat(product.getProductId() + ":" + cart.get(product) + ",");
+                result = result.concat(product.getProductName() + ":" + cart.get(product) + ",");
             }
 
             result = result.substring(0, result.length() - 1);
