@@ -150,7 +150,7 @@ public class Admin extends Guest {
     
     
             try {
-                FileWriter fw = new FileWriter("./data/" + choosenCategory + ".csv", true);
+                FileWriter fw = new FileWriter("GroupJava/data/" + choosenCategory + ".csv", true);
                 BufferedWriter bw = new BufferedWriter(fw);
                 PrintWriter pw = new PrintWriter(bw);
     
@@ -166,7 +166,10 @@ public class Admin extends Guest {
         } catch (Exception e) {
             System.out.println("Something went wrong");
         }
-       
+    }
+
+    public static void changeOrderStatus() {
+
     }
 
 }

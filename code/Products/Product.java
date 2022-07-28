@@ -1,5 +1,7 @@
 package Products;
 
+import Order.Order;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -10,6 +12,7 @@ public class Product {
     private int productQuantity;
     private final String productCategory;
     public static ArrayList<String> categoryList = new ArrayList<>();
+    public static ArrayList<Product> allProduct = new ArrayList<>();
     public static HashMap<String, ArrayList<Product>> productMap = new HashMap<>();
 
     public Product(String productId, String productName, double productPrice,String productCategory ,int productQuantity) {
@@ -18,6 +21,7 @@ public class Product {
         this.productPrice = productPrice;
         this.productCategory = productCategory;
         this.productQuantity = productQuantity;
+        Product.allProduct.add(this);
         if (productMap.containsKey(productCategory)) {
             productMap.get(productCategory).add(this);
         } else {
