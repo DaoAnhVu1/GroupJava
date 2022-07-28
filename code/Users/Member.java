@@ -112,6 +112,7 @@ public class Member extends Guest {
                 System.out.println("4: Show items by price");
                 System.out.println("5: Create an order");
                 System.out.println("6: Create your wishlist");
+                System.out.println("7: View your wishlist");
                 System.out.println("0: Logout");
                 System.out.println();
                 System.out.print("Your input: ");
@@ -131,6 +132,8 @@ public class Member extends Guest {
                     orderProcess();
                 } else if (input == 6) {
                     createWishlist();
+                } else if (input == 7) {
+                    viewWishList();
                 } else {
                     System.out.println("Invalid Input");
                 }
@@ -288,6 +291,12 @@ public class Member extends Guest {
             pw.close();
         } catch (Exception e) {
             System.out.println("Something went wrong");
+        }
+    }
+
+    public void viewWishList() {
+        for (Product product : Wishlist.wishList) {
+            System.out.println(product.getProductName().toString());
         }
     }
 
