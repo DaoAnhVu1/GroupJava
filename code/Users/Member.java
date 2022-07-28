@@ -1,6 +1,7 @@
 package Users;
 
 import java.io.*;
+import java.lang.reflect.Array;
 import java.util.*;
 import java.text.SimpleDateFormat;
 
@@ -20,7 +21,7 @@ public class Member extends Guest {
     private String memberLevel;
 
     public Member(String memberId, String memberName, String memberPassword, String memberPhone,
-            String memberEmail, String memberAddress, double memberMoneySpent) {
+                  String memberEmail, String memberAddress, double memberMoneySpent) {
         this.memberId = memberId;
         this.memberName = memberName;
         this.memberPassword = memberPassword;
@@ -265,10 +266,10 @@ public class Member extends Guest {
             Wishlist newWishList = new Wishlist(this.memberId, wishList);
             writeWishlist(this.getMemberId(), wishList);
         }
+
     }
 
     public void writeWishlist(String memberID, ArrayList<Product> wishList) {
-//        Wishlist memberWishlist = new Wishlist(memberId, wishList);
 
         try {
             // Write to wishlist
@@ -291,13 +292,28 @@ public class Member extends Guest {
     }
 
     public void viewWishList() {
-        for (Wishlist wishlist : Wishlist.allWishList) {
-            if (wishlist.getMemberId().equals(this.getMemberId())) {
-                for (Product product : wishlist.getWishList()) {
-                    System.out.println(product.getProductName());
+        String filePath = "./data/wishlist.csv";
+        BufferedReader reader = null;
+        String line = "";
+
+        try {
+            reader = new BufferedReader(new FileReader(filePath));
+            while ((line = reader.readLine()) != null) {
+                if (line.contains("ï»¿")) {
+                    line = line.replace("ï»¿", "");
                 }
-                break;
+                String[] row = line.split(",");
+                for (String index : row) {
+                    if (row[0].equals(memberId)) {
+                        System.out.printf("%-10s", index);
+                    }
+                }
+                System.out.println();
             }
+            reader.close();
+
+        } catch (Exception e) {
+            e.printStackTrace();
         }
 
     }
