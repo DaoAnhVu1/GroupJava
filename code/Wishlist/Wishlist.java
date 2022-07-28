@@ -8,7 +8,7 @@ import java.util.HashMap;
 
 public class Wishlist {
     private String memberId;
-    public static ArrayList<Product> wishList = new ArrayList<>();
+    private ArrayList<Product> wishList = new ArrayList<>();
 
     public Wishlist(String memberId, ArrayList<Product> wishList) {
         this.memberId = memberId;

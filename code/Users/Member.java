@@ -1,10 +1,8 @@
 package Users;
 
+import java.io.*;
 import java.lang.reflect.Array;
 import java.util.*;
-import java.io.BufferedWriter;
-import java.io.FileWriter;
-import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
 
 import Order.Order;
@@ -268,10 +266,12 @@ public class Member extends Guest {
             writeWishlist(this.getMemberId(), wishList);
         }
 
+        Wishlist newWishList = new Wishlist(this.memberId, wishList);
+
     }
 
     public void writeWishlist(String memberID, ArrayList<Product> wishList) {
-        Wishlist memberWishlist = new Wishlist(memberId, wishList);
+//        Wishlist memberWishlist = new Wishlist(memberId, wishList);
 
         try {
             // Write to wishlist
@@ -285,7 +285,6 @@ public class Member extends Guest {
                 result = result.concat(product.getProductId() + ",");
 
             }
-
             pw.println(result);
             pw.flush();
             pw.close();
@@ -295,9 +294,31 @@ public class Member extends Guest {
     }
 
     public void viewWishList() {
-        for (Product product : Wishlist.wishList) {
-            System.out.println(product.getProductName().toString());
+        String filePath = "./data/wishlist.csv";
+        BufferedReader reader = null;
+        String line = "";
+
+        try {
+            reader = new BufferedReader(new FileReader(filePath));
+            while ((line = reader.readLine()) != null) {
+                if (line.contains("ï»¿")) {
+                    line = line.replace("ï»¿", "");
+                }
+                String[] row = line.split(",");
+                for (String index : row) {
+//                    System.out.printf("%-10s", index);
+                    if (row[0].equals(memberId)) {
+                        System.out.printf("%-10s", index);
+                    }
+                }
+                System.out.println();
+            }
+            reader.close();
+
+        } catch (Exception e) {
+            e.printStackTrace();
         }
+
     }
 
     public void createAndWriteOrder(String memberId, String memberLevel, HashMap<Product, Integer> cart, ArrayList<String> allChosenCategory) {
