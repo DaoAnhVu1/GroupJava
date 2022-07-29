@@ -20,7 +20,8 @@ public class Admin extends Guest {
             System.out.println("4: Show all items by price");
             System.out.println("5: Change product's price");
             System.out.println("6: Add new product");
-            System.out.println("7: Change order status");
+            System.out.println("7: Remove product");
+            System.out.println("8: Change order status");
             System.out.println("0: Logout");
             System.out.println();
             System.out.printf("Your input: ");
@@ -41,6 +42,8 @@ public class Admin extends Guest {
             } else if (input == 6) {
                 Admin.addNewProduct();
             } else if (input == 7) {
+                removeProduct();
+            } else if (input == 8) {
                 changeOrderStatus();
             }
         }
@@ -206,7 +209,8 @@ public class Admin extends Guest {
                 PrintWriter pw = new PrintWriter(bw);
 
                 for (Order order : list) {
-                    String result = order.getOrderId() + "," + order.getMemberId() + "," + order.getOrderDate() + "," + Double.toString(order.getTotal()) + ","
+                    String result = order.getOrderId() + "," + order.getMemberId() + "," + order.getOrderDate() + ","
+                            + Double.toString(order.getTotal()) + ","
                             + order.getStatus() + ",";
 
                     for (Product product : order.getItems().keySet()) {
@@ -214,6 +218,67 @@ public class Admin extends Guest {
                     }
                     result = result.substring(0, result.length() - 1);
                     pw.println(result);
+                }
+
+                pw.flush();
+                pw.close();
+            } catch (Exception e) {
+                System.out.println("Something went wrong");
+            }
+
+            System.out.println("Success");
+        } catch (Exception e) {
+            System.out.println();
+            System.out.println("Invalid Input");
+        }
+
+    }
+
+    public static void removeProduct() {
+        Scanner sc = new Scanner(System.in);
+        int indexToShow = 1;
+        for (String category : Product.categoryList) {
+            System.out.println(indexToShow + ": " + category);
+            indexToShow += 1;
+        }
+
+        try {
+            System.out.print("Choose a category: ");
+            int inputCategory = sc.nextInt();
+            System.out.println();
+
+            if (!(inputCategory > 0 && inputCategory <= Product.categoryList.size())) {
+                System.out.println("Invalid input");
+                return;
+            }
+
+            String choosenCategory = Product.categoryList.get(inputCategory - 1);
+            ArrayList<Product> choosenList = Product.productMap.get(choosenCategory);
+            indexToShow = 1;
+
+            System.out.printf("|%-10s|%-25s|%-15s|%-15s|%-5ss", "Number ", "Name", "Price", "Category", "Quantity");
+            System.out.println();
+
+            for (Product product : choosenList) {
+                System.out.printf("|%-10s|%-25s|%-15.0f|%-15s|%-5s", indexToShow, product.getProductName(),
+                        product.getProductPrice(), product.getProductCategory(), product.getProductQuantity());
+                indexToShow += 1;
+                System.out.println();
+            }
+
+            System.out.print("Choose a product to remove: ");
+            int indexChosenProduct = sc.nextInt();
+            System.out.println();
+            choosenList.remove(indexChosenProduct - 1);
+
+            try {
+                FileWriter fw = new FileWriter("./data/" + choosenCategory + ".csv");
+                BufferedWriter bw = new BufferedWriter(fw);
+                PrintWriter pw = new PrintWriter(bw);
+
+                for (Product product : choosenList) {
+                    pw.println(product.getProductId() + "," + product.getProductName() + "," + product.getProductPrice()
+                            + "," + product.getProductQuantity());
                 }
 
                 pw.flush();
