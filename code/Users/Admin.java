@@ -204,7 +204,11 @@ public class Admin extends Guest {
 
                 for (Order order : list) {
                     if (list.get(0).getOrderId().equals(chosenOrder.getOrderId())) {
-                        pw.println(order.getOrderId()+","+order.getMemberId()+","+order.getOrderDate()+","+order.getTotal()+","+order.getStatus()+","+order.getItems());
+                        pw.println(chosenOrder.getOrderId()+","+chosenOrder.getMemberId()+","+chosenOrder.getOrderDate()+","
+                                +chosenOrder.getTotal()+","+chosenOrder.getStatus()+","+chosenOrder.getItems());
+                    } else {
+                        pw.println(order.getOrderId()+","+order.getMemberId()+","+order.getOrderDate()+","
+                                +order.getTotal()+","+order.getStatus()+","+order.getItems());
                     }
                 }
 
