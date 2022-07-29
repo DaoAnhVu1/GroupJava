@@ -211,7 +211,6 @@ public class Admin extends Guest {
             for (Product product : chosenList) {
                 if (product.getProductId().equals(chosenProduct.getProductId())) {
                     toRemove1.add(product);
-                    Product.allProduct.remove(product);
                 }
             }
 
