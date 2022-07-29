@@ -6,6 +6,8 @@ import java.util.*;
 import Products.Product;
 import Order.Order;
 
+import javax.sound.midi.Soundbank;
+
 public class Admin extends Guest {
     public static void adminStart() {
         Scanner sc = new Scanner(System.in);
@@ -44,7 +46,9 @@ public class Admin extends Guest {
             } else if (input == 7) {
                 removeProduct();
             } else if (input == 8) {
-                changeOrderStatus();
+                Admin.removeProduct();
+            } else if (input == 8) {
+                Admin.changeOrderStatus();
             }
         }
     }
@@ -152,7 +156,7 @@ public class Admin extends Guest {
             String id = UUID.randomUUID().toString().substring(0, 8);
 
             try {
-                FileWriter fw = new FileWriter("GroupJava/data/" + choosenCategory + ".csv", true);
+                FileWriter fw = new FileWriter("./data/" + choosenCategory + ".csv", true);
                 BufferedWriter bw = new BufferedWriter(fw);
                 PrintWriter pw = new PrintWriter(bw);
 
@@ -166,6 +170,78 @@ public class Admin extends Guest {
             Product newProduct = new Product(id, productName, Double.parseDouble(productPrice), choosenCategory,
                     Integer.parseInt(productQuantity));
             System.out.println("Success");
+        } catch (Exception e) {
+            System.out.println("Something went wrong");
+        }
+    }
+
+    public static void removeProduct() {
+        try {
+            Scanner sc = new Scanner(System.in);
+            int indexToShow = 1;
+            int indexProduct = 1;
+            for (String category : Product.categoryList) {
+                System.out.println(indexToShow + ": " + category);
+                indexToShow += 1;
+            }
+            System.out.print("Choose a category: ");
+            int inputCategory = sc.nextInt();
+
+            System.out.println();
+            String chosenCategory = Product.categoryList.get(inputCategory - 1);
+
+            ArrayList<Product> chosenList = Product.productMap.get(chosenCategory);
+
+            System.out.printf("|%-10s|%-25s|%-15s|%-15s|%-5ss", "Number ", "Name", "Price", "Category", "Quantity");
+            System.out.println();
+
+            for (Product product : chosenList) {
+                System.out.printf("|%-10s|%-25s|%-15.0f|%-15s|%-5s", indexProduct, product.getProductName(),
+                        product.getProductPrice(), product.getProductCategory(), product.getProductQuantity());
+                indexProduct += 1;
+                System.out.println();
+            }
+
+            System.out.print("Choose a product: ");
+            int indexChosenProduct = sc.nextInt();
+
+            Product chosenProduct = chosenList.get(indexChosenProduct - 1);
+            ArrayList<Product> toRemove1 = new ArrayList<>();
+            ArrayList<Product> toRemove2 = new ArrayList<>();
+            for (Product product : chosenList) {
+                if (product.getProductId().equals(chosenProduct.getProductId())) {
+                    toRemove1.add(product);
+                    Product.allProduct.remove(product);
+                }
+            }
+
+            for (Product product1 : Product.productMap.get(chosenCategory)) {
+                if (product1.getProductId().equals(chosenProduct.getProductId())) {
+                    toRemove2.add(product1);
+                }
+            }
+
+            Product.allProduct.removeAll(toRemove1);
+            Product.productMap.get(chosenCategory).removeAll(toRemove2);
+
+            try {
+                FileWriter fw = new FileWriter("./data/" + chosenCategory + ".csv");
+                BufferedWriter bw = new BufferedWriter(fw);
+                PrintWriter pw = new PrintWriter(bw);
+
+                for (Product product : chosenList) {
+                    pw.println(product.getProductId() + "," + product.getProductName() + "," + product.getProductPrice()
+                            + "," + product.getProductQuantity());
+                }
+
+                pw.flush();
+                pw.close();
+            } catch (Exception e) {
+                System.out.println("Something went wrong");
+            }
+
+            System.out.println("Success");
+
         } catch (Exception e) {
             System.out.println("Something went wrong");
         }
@@ -218,67 +294,6 @@ public class Admin extends Guest {
                     }
                     result = result.substring(0, result.length() - 1);
                     pw.println(result);
-                }
-
-                pw.flush();
-                pw.close();
-            } catch (Exception e) {
-                System.out.println("Something went wrong");
-            }
-
-            System.out.println("Success");
-        } catch (Exception e) {
-            System.out.println();
-            System.out.println("Invalid Input");
-        }
-
-    }
-
-    public static void removeProduct() {
-        Scanner sc = new Scanner(System.in);
-        int indexToShow = 1;
-        for (String category : Product.categoryList) {
-            System.out.println(indexToShow + ": " + category);
-            indexToShow += 1;
-        }
-
-        try {
-            System.out.print("Choose a category: ");
-            int inputCategory = sc.nextInt();
-            System.out.println();
-
-            if (!(inputCategory > 0 && inputCategory <= Product.categoryList.size())) {
-                System.out.println("Invalid input");
-                return;
-            }
-
-            String choosenCategory = Product.categoryList.get(inputCategory - 1);
-            ArrayList<Product> choosenList = Product.productMap.get(choosenCategory);
-            indexToShow = 1;
-
-            System.out.printf("|%-10s|%-25s|%-15s|%-15s|%-5ss", "Number ", "Name", "Price", "Category", "Quantity");
-            System.out.println();
-
-            for (Product product : choosenList) {
-                System.out.printf("|%-10s|%-25s|%-15.0f|%-15s|%-5s", indexToShow, product.getProductName(),
-                        product.getProductPrice(), product.getProductCategory(), product.getProductQuantity());
-                indexToShow += 1;
-                System.out.println();
-            }
-
-            System.out.print("Choose a product to remove: ");
-            int indexChosenProduct = sc.nextInt();
-            System.out.println();
-            choosenList.remove(indexChosenProduct - 1);
-
-            try {
-                FileWriter fw = new FileWriter("./data/" + choosenCategory + ".csv");
-                BufferedWriter bw = new BufferedWriter(fw);
-                PrintWriter pw = new PrintWriter(bw);
-
-                for (Product product : choosenList) {
-                    pw.println(product.getProductId() + "," + product.getProductName() + "," + product.getProductPrice()
-                            + "," + product.getProductQuantity());
                 }
 
                 pw.flush();
