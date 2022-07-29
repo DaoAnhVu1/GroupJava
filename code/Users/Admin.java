@@ -1,13 +1,10 @@
 package Users;
 
-import java.io.BufferedWriter;
-import java.io.FileWriter;
-import java.io.PrintWriter;
-import java.util.ArrayList;
-import java.util.Scanner;
-import java.util.UUID;
+import java.io.*;
+import java.util.*;
 
 import Products.Product;
+import Order.Order;
 
 public class Admin extends Guest {
     public static void adminStart() {
@@ -23,6 +20,7 @@ public class Admin extends Guest {
             System.out.println("4: Show all items by price");
             System.out.println("5: Change product's price");
             System.out.println("6: Add new product");
+            System.out.println("7: Change order status");
             System.out.println("0: Logout");
             System.out.println();
             System.out.printf("Your input: ");
@@ -42,6 +40,8 @@ public class Admin extends Guest {
                 Admin.changeProductPrice();
             } else if (input == 6) {
                 Admin.addNewProduct();
+            } else if (input == 7) {
+                changeOrderStatus();
             }
         }
     }
@@ -169,7 +169,57 @@ public class Admin extends Guest {
     }
 
     public static void changeOrderStatus() {
-            
+        try {
+            Scanner sc = new Scanner(System.in);
+            ArrayList<Order> list = Order.allOrder;
+            System.out.printf("|%-10s|%-15s|%-15s|%-15s|%-15s|%-15s", "OrderId ", "MemberId", "Date", "Total", "Status", "Product");
+            System.out.println();
+            for (Order order : list) {
+                System.out.printf("|%-10s|%-15s|%-15s|%-15s|%-15s|%-15s", order.getOrderId(), order.getMemberId(), order.getOrderDate(),
+                        order.getTotal(), order.getStatus(), Collections.singletonList(order.getItems()));
+                System.out.println();
+            }
+            System.out.println();
+
+            System.out.print("Choose an order (OrderId): ");
+            String inputOrder = sc.nextLine();
+
+            Order chosenOrder = null;
+            for (Order order : list) {
+                if (order.getOrderId().equals(inputOrder))
+                    chosenOrder = order;
+            }
+
+            System.out.print("Enter the new status (paid or processing): ");
+            String newStatus = sc.nextLine();
+            System.out.println();
+
+            chosenOrder.setStatus(newStatus);
+
+            try {
+                FileWriter fw = new FileWriter("./data/Order.csv");
+                BufferedWriter bw = new BufferedWriter(fw);
+                PrintWriter pw = new PrintWriter(bw);
+
+
+                for (Order order : list) {
+                    if (list.get(0).getOrderId().equals(chosenOrder.getOrderId())) {
+                        pw.println(order.getOrderId()+","+order.getMemberId()+","+order.getOrderDate()+","+order.getTotal()+","+order.getStatus()+","+order.getItems());
+                    }
+                }
+
+                pw.flush();
+                pw.close();
+            } catch (Exception e) {
+                System.out.println("Something went wrong");
+            }
+
+            System.out.println("Success");
+        } catch (Exception e) {
+            System.out.println();
+            System.out.println("Invalid Input");
+        }
+
     }
 
 }

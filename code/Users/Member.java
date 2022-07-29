@@ -2,6 +2,7 @@ package Users;
 
 import java.io.*;
 import java.lang.reflect.Array;
+import java.sql.SQLOutput;
 import java.util.*;
 import java.text.SimpleDateFormat;
 
@@ -147,6 +148,7 @@ public class Member extends Guest {
         System.out.println("Phone: " + this.getMemberPhone());
         System.out.println("Email: " + this.getMemberEmail());
         System.out.println("Address: " + this.getMemberAddress());
+        System.out.println("Status: " + this.getMemberLevel());
     }
 
     public void orderProcess() {
@@ -350,7 +352,7 @@ public class Member extends Guest {
                     + ",";
 
             for (Product product : cart.keySet()) {
-                result = result.concat(product.getProductName() + ":" + cart.get(product) + ",");
+                result = result.concat(product.getProductId() + ":" + cart.get(product) + ",");
             }
 
             result = result.substring(0, result.length() - 1);

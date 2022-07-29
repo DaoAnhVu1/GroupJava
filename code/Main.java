@@ -16,6 +16,7 @@ public class Main {
         loadProductData("./data/GPU.csv");
         loadProductData("./data/HardDrive.csv");
         loadMemberData();
+        loadOrderData();
         Scanner sc = new Scanner(System.in);
         System.out.println("Please choose one of the following options");
 
