@@ -371,7 +371,6 @@ public class Member extends Guest {
                 PrintWriter pw = new PrintWriter(bw);
 
                 for (Product product : Product.productMap.get(chosenCategory)) {
-                    System.out.println(product.getProductName());
                     pw.println(product.getProductId()+","+product.getProductName()+","+product.getProductPrice()+","+product.getProductQuantity());
                 }
                 pw.flush();
@@ -397,8 +396,6 @@ public class Member extends Guest {
             } else if (this.getMemberMoneySpent() >= 15000000) {
                 this.setMemberLevel("Platinum");
             }
-
-            System.out.println(this.getMemberLevel());
 
             for (Member member : allMember) {
                 pw.println(

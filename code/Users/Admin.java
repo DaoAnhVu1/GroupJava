@@ -67,62 +67,62 @@ public class Admin extends Guest {
             System.out.print("Choose a category: ");
             int inputCategory = sc.nextInt();
             System.out.println();
-    
-            if(!(inputCategory > 0 && inputCategory <= Product.categoryList.size())) {
+
+            if (!(inputCategory > 0 && inputCategory <= Product.categoryList.size())) {
                 System.out.println("Invalid input");
                 return;
             }
-    
+
             String choosenCategory = Product.categoryList.get(inputCategory - 1);
             ArrayList<Product> choosenList = Product.productMap.get(choosenCategory);
             indexToShow = 1;
-    
+
             System.out.printf("|%-10s|%-25s|%-15s|%-15s|%-5ss", "Number ", "Name", "Price", "Category", "Quantity");
             System.out.println();
-    
+
             for (Product product : choosenList) {
                 System.out.printf("|%-10s|%-25s|%-15.0f|%-15s|%-5s", indexToShow, product.getProductName(),
                         product.getProductPrice(), product.getProductCategory(), product.getProductQuantity());
-                indexToShow +=1;
+                indexToShow += 1;
                 System.out.println();
             }
-    
+
             System.out.print("Choose a product: ");
             int indexChosenProduct = sc.nextInt();
             System.out.println();
-    
-            Product chosenProduct = choosenList.get(indexChosenProduct-1);
+
+            Product chosenProduct = choosenList.get(indexChosenProduct - 1);
             System.out.print("Enter the new price: ");
             double newPrice = sc.nextDouble();
             System.out.println();
-    
+
             chosenProduct.setProductPrice(newPrice);
-    
+
             try {
                 FileWriter fw = new FileWriter("./data/" + choosenCategory + ".csv");
                 BufferedWriter bw = new BufferedWriter(fw);
                 PrintWriter pw = new PrintWriter(bw);
-    
-    
+
                 for (Product product : choosenList) {
-                    pw.println(product.getProductId()+","+product.getProductName()+","+product.getProductPrice()+","+product.getProductQuantity());
+                    pw.println(product.getProductId() + "," + product.getProductName() + "," + product.getProductPrice()
+                            + "," + product.getProductQuantity());
                 }
-    
+
                 pw.flush();
                 pw.close();
             } catch (Exception e) {
                 System.out.println("Something went wrong");
             }
-    
+
             System.out.println("Success");
         } catch (Exception e) {
             System.out.println();
             System.out.println("Invalid Input");
         }
-       
+
     }
 
-    public static void addNewProduct () {
+    public static void addNewProduct() {
         try {
             Scanner sc = new Scanner(System.in);
             int indexToShow = 1;
@@ -135,7 +135,7 @@ public class Admin extends Guest {
             sc.nextLine();
             System.out.println();
             String choosenCategory = Product.categoryList.get(inputCategory - 1);
-    
+
             System.out.print("Enter the name: ");
             String productName = sc.nextLine();
             System.out.println();
@@ -145,23 +145,23 @@ public class Admin extends Guest {
             System.out.print("Enter the quantity: ");
             String productQuantity = sc.nextLine();
             System.out.println();
-    
-            String id = UUID.randomUUID().toString().substring(0,8);
-    
-    
+
+            String id = UUID.randomUUID().toString().substring(0, 8);
+
             try {
                 FileWriter fw = new FileWriter("GroupJava/data/" + choosenCategory + ".csv", true);
                 BufferedWriter bw = new BufferedWriter(fw);
                 PrintWriter pw = new PrintWriter(bw);
-    
-                pw.println(id+","+productName+","+productPrice+","+productQuantity);
+
+                pw.println(id + "," + productName + "," + productPrice + "," + productQuantity);
                 pw.flush();
                 pw.close();
             } catch (Exception e) {
                 e.printStackTrace();
             }
-    
-            Product newProduct = new Product(id, productName, Double.parseDouble(productPrice), choosenCategory, Integer.parseInt(productQuantity));
+
+            Product newProduct = new Product(id, productName, Double.parseDouble(productPrice), choosenCategory,
+                    Integer.parseInt(productQuantity));
             System.out.println("Success");
         } catch (Exception e) {
             System.out.println("Something went wrong");
@@ -172,15 +172,19 @@ public class Admin extends Guest {
         try {
             Scanner sc = new Scanner(System.in);
             ArrayList<Order> list = Order.allOrder;
-            System.out.printf("|%-10s|%-15s|%-15s|%-15s|%-15s|%-15s", "OrderId ", "MemberId", "Date", "Total", "Status", "Product");
+            System.out.printf("|%-10s|%-15s|%-15s|%-15s|%-15s|%-15s", "OrderId ", "MemberId", "Date", "Total", "Status",
+                    "Product");
             System.out.println();
             for (Order order : list) {
-                System.out.printf("|%-10s|%-15s|%-15s|%-15s|%-15s|%-15s", order.getOrderId(), order.getMemberId(), order.getOrderDate(),
-                        order.getTotal(), order.getStatus(), Collections.singletonList(order.getItems()));
+                System.out.printf("|%-10s|%-15s|%-15s|%-15s|%-15s", order.getOrderId(), order.getMemberId(),
+                        order.getOrderDate(),
+                        order.getTotal(), order.getStatus());
+                for (Product product : order.getItems().keySet()) {
+                    System.out.printf("|%-20s", product.getProductName());
+                    System.out.print(" : " + order.getItems().get(product) + " ");
+                }
                 System.out.println();
             }
-            System.out.println();
-
             System.out.print("Choose an order (OrderId): ");
             String inputOrder = sc.nextLine();
 
@@ -201,15 +205,15 @@ public class Admin extends Guest {
                 BufferedWriter bw = new BufferedWriter(fw);
                 PrintWriter pw = new PrintWriter(bw);
 
-
                 for (Order order : list) {
-                    if (list.get(0).getOrderId().equals(chosenOrder.getOrderId())) {
-                        pw.println(chosenOrder.getOrderId()+","+chosenOrder.getMemberId()+","+chosenOrder.getOrderDate()+","
-                                +chosenOrder.getTotal()+","+chosenOrder.getStatus()+","+chosenOrder.getItems());
-                    } else {
-                        pw.println(order.getOrderId()+","+order.getMemberId()+","+order.getOrderDate()+","
-                                +order.getTotal()+","+order.getStatus()+","+order.getItems());
+                    String result = order.getOrderId() + "," + order.getMemberId() + "," + order.getOrderDate() + "," + Double.toString(order.getTotal()) + ","
+                            + order.getStatus() + ",";
+
+                    for (Product product : order.getItems().keySet()) {
+                        result = result.concat(product.getProductId() + ":" + order.getItems().get(product) + ",");
                     }
+                    result = result.substring(0, result.length() - 1);
+                    pw.println(result);
                 }
 
                 pw.flush();
