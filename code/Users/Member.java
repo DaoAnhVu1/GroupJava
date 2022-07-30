@@ -5,6 +5,7 @@ import java.lang.reflect.Array;
 import java.sql.SQLOutput;
 import java.util.*;
 import java.text.SimpleDateFormat;
+import java.util.stream.Collectors;
 
 import Order.Order;
 import Products.Product;
@@ -241,17 +242,29 @@ public class Member extends Guest {
             ArrayList<Order> list = Order.allOrder;
             System.out.print("Enter an order ID: ");
             String input = sc.nextLine();
-//            Order userOrder = null;
+
             System.out.printf("|%-10s|%-15s|%-15s|%-15s|%-15s|%-15s", "OrderId ", "MemberId", "Date", "Total", "Status",
                     "Product");
             System.out.println();
+
             for (Order order : list) {
-                if (order.getOrderId().equals(input))
-//                    userOrder= order;
-                    System.out.printf("|%-10s|%-15s|%-15s|%-15s|%-15s|%-15s", order.getOrderId(), order.getMemberId(), order.getOrderDate(),
-                    order.getTotal(), order.getStatus(), order.getItems());
+                if (order.getOrderId().equals(input)) {
+
+                    String id = order.getOrderId();
+                    String memberId = order.getMemberId();
+                    String date = order.getOrderDate();
+                    String total = Double.toString(order.getTotal());
+                    String status = order.getStatus();
+                    HashMap<Product, Integer> cart = order.getItems();
+
+                    System.out.printf("|%-10s|%-15s|%-15s|%-15s|%-15s|%-15s", id, memberId, date, total, status,
+                            cart.keySet().stream().map(key -> key.getProductId() + ":" + cart.get(key)).collect(Collectors.joining(", ", "{", "}")));
+                    System.out.println();
+
+                }
+
             }
-//            System.out.println(userOrder);
+
         } catch (Exception e) {
             System.out.println();
             System.out.println("Invalid order ID!");

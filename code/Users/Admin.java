@@ -2,6 +2,7 @@ package Users;
 
 import java.io.*;
 import java.util.*;
+import java.util.stream.Collectors;
 
 import Products.Product;
 import Order.Order;
@@ -55,9 +56,9 @@ public class Admin extends Guest {
 
     public static void showAllMember() {
         for (Member member : Member.allMember) {
-            System.out.println(member.getMemberId());
-            System.out.println(member.getMemberName());
-            System.out.println(member.getMemberPassword());
+            System.out.println("ID: " + member.getMemberId());
+            System.out.println("Name: " + member.getMemberName());
+            System.out.println("Password: " + member.getMemberPassword());
             System.out.println();
         }
     }
@@ -249,7 +250,7 @@ public class Admin extends Guest {
         }
     }
 
-    public static void viewAllOrder(){
+    public static void viewAllOrder() {
         showAllMember();
         try {
             Scanner sc = new Scanner(System.in);
@@ -259,12 +260,25 @@ public class Admin extends Guest {
             System.out.printf("|%-10s|%-15s|%-15s|%-15s|%-15s|%-15s", "OrderId ", "MemberId", "Date", "Total", "Status",
                     "Product");
             System.out.println();
+
             for (Order order : list) {
-                if (order.getMemberId().equals(inputId))
-                    System.out.printf("|%-10s|%-15s|%-15s|%-15s|%-15s", order.getOrderId(), order.getMemberId(),
-                            order.getOrderDate(),
-                            order.getTotal(), order.getStatus());
+                if (order.getMemberId().equals(inputId)) {
+
+                    String id = order.getOrderId();
+                    String memberId = order.getMemberId();
+                    String date = order.getOrderDate();
+                    String total = Double.toString(order.getTotal());
+                    String status = order.getStatus();
+                    HashMap<Product, Integer> cart = order.getItems();
+
+                    System.out.printf("|%-10s|%-15s|%-15s|%-15s|%-15s|%-15s", id, memberId, date, total, status,
+                            cart.keySet().stream().map(key -> key.getProductId() + ":" + cart.get(key)).collect(Collectors.joining(", ", "{", "}")));
+                    System.out.println();
+
+                }
+
             }
+
         } catch (Exception e) {
             System.out.println();
             System.out.println("Invalid member ID!");
