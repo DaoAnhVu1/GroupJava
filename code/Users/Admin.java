@@ -257,6 +257,7 @@ public class Admin extends Guest {
             ArrayList<Order> list = Order.allOrder;
             System.out.printf("Enter the member ID of the order: ");
             String inputId = sc.nextLine();
+            System.out.println();
             System.out.printf("|%-10s|%-15s|%-15s|%-15s|%-15s|%-15s", "OrderId ", "MemberId", "Date", "Total", "Status",
                     "Product");
             System.out.println();
@@ -282,8 +283,8 @@ public class Admin extends Guest {
 
         } catch (Exception e) {
             e.printStackTrace();
-            // System.out.println();
-            // System.out.println("Invalid member ID!");
+             System.out.println();
+             System.out.println("Invalid member ID!");
         }
     }
 
@@ -306,18 +307,26 @@ public class Admin extends Guest {
             }
             System.out.print("Choose an order (OrderId): ");
             String inputOrder = sc.nextLine();
+            boolean found = false;
 
             Order chosenOrder = null;
             for (Order order : list) {
-                if (order.getOrderId().equals(inputOrder))
+                if (order.getOrderId().equals(inputOrder)) {
                     chosenOrder = order;
+                    found = true;
+                }
             }
 
-            System.out.print("Enter the new status (paid or processing): ");
-            String newStatus = sc.nextLine();
-            System.out.println();
-
-            chosenOrder.setStatus(newStatus);
+            if (!found) {
+                System.out.println();
+                System.out.println("Wrong ID");
+                return;
+            } else {
+                System.out.print("Enter the new status (paid or processing): ");
+                String newStatus = sc.nextLine();
+                System.out.println();
+                chosenOrder.setStatus(newStatus);
+            }
 
             try {
                 FileWriter fw = new FileWriter("./data/Order.csv");
