@@ -1,7 +1,5 @@
 package Products;
 
-import Order.Order;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 

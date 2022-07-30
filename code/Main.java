@@ -16,6 +16,7 @@ public class Main {
         loadProductData("./data/GPU.csv");
         loadProductData("./data/HardDrive.csv");
         loadMemberData();
+        loadOrderData();
         Scanner sc = new Scanner(System.in);
         System.out.println("Please choose one of the following options");
 
@@ -27,6 +28,8 @@ public class Main {
             System.out.println("4: Show all items by category");
             System.out.println("5: Show all items by price");
             System.out.println("0: Exit");
+//            System.out.println(Product.allProduct.toString());
+//            System.out.println(Product.productMap.toString());
             System.out.println();
             int input = sc.nextInt();
             System.out.println();

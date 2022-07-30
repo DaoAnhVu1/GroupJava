@@ -2,8 +2,10 @@ package Users;
 
 import java.io.*;
 import java.lang.reflect.Array;
+import java.sql.SQLOutput;
 import java.util.*;
 import java.text.SimpleDateFormat;
+import java.util.stream.Collectors;
 
 import Order.Order;
 import Products.Product;
@@ -12,7 +14,7 @@ import Wishlist.Wishlist;
 public class Member extends Guest {
     public static ArrayList<Member> allMember = new ArrayList<>();
     private final String memberId;
-    private String memberName;
+    private final String memberName;
     private String memberPassword;
     private String memberPhone;
     private String memberEmail;
@@ -105,12 +107,14 @@ public class Member extends Guest {
                 System.out.println();
                 System.out.println("Choose what you want to do: ");
                 System.out.println("1: Your Info");
-                System.out.println("2: Show all items by details: ");
+                System.out.println("2: Show all items by details");
                 System.out.println("3: Show items by category");
                 System.out.println("4: Show items by price");
                 System.out.println("5: Create an order");
-                System.out.println("6: Create your wishlist");
-                System.out.println("7: View your wishlist");
+                System.out.println("6: View an order");
+                System.out.println("7: Create your wishlist");
+                System.out.println("8: View your wishlist");
+                System.out.println("9: Edit your profile");
                 System.out.println("0: Logout");
                 System.out.println();
                 System.out.print("Your input: ");
@@ -129,9 +133,13 @@ public class Member extends Guest {
                 } else if (input == 5) {
                     orderProcess();
                 } else if (input == 6) {
-                    createWishlist();
+                    viewOrder();
                 } else if (input == 7) {
+                    createWishlist();
+                } else if (input == 8) {
                     viewWishList();
+                } else if (input == 9) {
+                    editProfile();
                 } else {
                     System.out.println("Invalid Input");
                 }
@@ -147,6 +155,7 @@ public class Member extends Guest {
         System.out.println("Phone: " + this.getMemberPhone());
         System.out.println("Email: " + this.getMemberEmail());
         System.out.println("Address: " + this.getMemberAddress());
+        System.out.println("Status: " + this.getMemberLevel());
     }
 
     public void orderProcess() {
@@ -227,6 +236,47 @@ public class Member extends Guest {
         }
     }
 
+    public void viewOrder() {
+        try {
+            Scanner sc = new Scanner(System.in);
+            ArrayList<Order> list = Order.allOrder;
+            System.out.print("Enter an order ID: ");
+            String input = sc.nextLine();
+
+            System.out.printf("|%-10s|%-15s|%-15s|%-15s|%-15s|%-15s", "OrderId ", "MemberId", "Date", "Total", "Status",
+                    "Product");
+            System.out.println();
+
+            for (Order order : list) {
+                if (order.getOrderId().equals(input)) {
+
+                    String id = order.getOrderId();
+                    String memberId = order.getMemberId();
+                    String date = order.getOrderDate();
+                    String total = Double.toString(order.getTotal());
+                    String status = order.getStatus();
+
+                    System.out.printf("|%-10s|%-15s|%-15s|%-15s|%-15s", id, memberId, date, total, status);
+                    for (Product product : order.getItems().keySet()) {
+                        System.out.printf("|%-20s", product.getProductName());
+                        System.out.print(" : " + order.getItems().get(product) + " ");
+                    }
+                    System.out.println();
+
+                }
+
+            }
+
+        } catch (Exception e) {
+            System.out.println();
+            System.out.println("Invalid order ID!");
+        }
+    }
+
+    public void createAndWriteVoucher(){
+
+    }
+
     public void createWishlist() {
         Scanner sc = new Scanner(System.in);
         ArrayList<Product> wishList = new ArrayList<>();
@@ -303,9 +353,13 @@ public class Member extends Guest {
                     line = line.replace("ï»¿", "");
                 }
                 String[] row = line.split(",");
+
+                System.out.printf("|%-10s|%-10s", "Your ID", "Product");
+                System.out.println();
+
                 for (String index : row) {
                     if (row[0].equals(memberId)) {
-                        System.out.printf("%-10s", index);
+                        System.out.printf("|%-10s", index);
                     }
                 }
                 System.out.println();
@@ -350,7 +404,7 @@ public class Member extends Guest {
                     + ",";
 
             for (Product product : cart.keySet()) {
-                result = result.concat(product.getProductName() + ":" + cart.get(product) + ",");
+                result = result.concat(product.getProductId() + ":" + cart.get(product) + ",");
             }
 
             result = result.substring(0, result.length() - 1);
@@ -369,7 +423,6 @@ public class Member extends Guest {
                 PrintWriter pw = new PrintWriter(bw);
 
                 for (Product product : Product.productMap.get(chosenCategory)) {
-                    System.out.println(product.getProductName());
                     pw.println(product.getProductId()+","+product.getProductName()+","+product.getProductPrice()+","+product.getProductQuantity());
                 }
                 pw.flush();
@@ -396,8 +449,6 @@ public class Member extends Guest {
                 this.setMemberLevel("Platinum");
             }
 
-            System.out.println(this.getMemberLevel());
-
             for (Member member : allMember) {
                 pw.println(
                         member.getMemberId() + "," + member.getMemberName() + "," + member.getMemberPassword() + ","
@@ -412,4 +463,9 @@ public class Member extends Guest {
             System.out.println("Something went wrong");
         }
     }
+
+    public static void editProfile() {
+
+    }
+
 }
