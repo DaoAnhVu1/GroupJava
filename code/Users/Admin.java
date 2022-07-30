@@ -6,7 +6,6 @@ import java.util.*;
 import Products.Product;
 import Order.Order;
 
-import javax.sound.midi.Soundbank;
 
 public class Admin extends Guest {
     public static void adminStart() {
@@ -16,14 +15,15 @@ public class Admin extends Guest {
             System.out.println();
             System.out.println("Welcome ADMIN");
             System.out.println("Choose your actions: ");
-            System.out.println("1: Show all users");
+            System.out.println("1: Show all members");
             System.out.println("2: Show all items and its details");
             System.out.println("3: Show all items by category");
             System.out.println("4: Show all items by price");
             System.out.println("5: Change product's price");
             System.out.println("6: Add new product");
             System.out.println("7: Remove product");
-            System.out.println("8: Change order status");
+            System.out.println("8: View all order");
+            System.out.println("9: Change order status");
             System.out.println("0: Logout");
             System.out.println();
             System.out.printf("Your input: ");
@@ -32,7 +32,7 @@ public class Admin extends Guest {
             if (input == 0) {
                 break;
             } else if (input == 1) {
-                showAllUser();
+                showAllMember();
             } else if (input == 2) {
                 Guest.showAllItemsDetails();
             } else if (input == 3) {
@@ -46,14 +46,14 @@ public class Admin extends Guest {
             } else if (input == 7) {
                 removeProduct();
             } else if (input == 8) {
-                Admin.removeProduct();
-            } else if (input == 8) {
+                viewAllOrder();
+            } else if (input == 9) {
                 Admin.changeOrderStatus();
             }
         }
     }
 
-    public static void showAllUser() {
+    public static void showAllMember() {
         for (Member member : Member.allMember) {
             System.out.println(member.getMemberId());
             System.out.println(member.getMemberName());
@@ -206,8 +206,10 @@ public class Admin extends Guest {
             int indexChosenProduct = sc.nextInt();
 
             Product chosenProduct = chosenList.get(indexChosenProduct - 1);
+
             ArrayList<Product> toRemove1 = new ArrayList<>();
             ArrayList<Product> toRemove2 = new ArrayList<>();
+
             for (Product product : chosenList) {
                 if (product.getProductId().equals(chosenProduct.getProductId())) {
                     toRemove1.add(product);
@@ -239,10 +241,33 @@ public class Admin extends Guest {
                 System.out.println("Something went wrong");
             }
 
+            System.out.println();
             System.out.println("Success");
 
         } catch (Exception e) {
             System.out.println("Something went wrong");
+        }
+    }
+
+    public static void viewAllOrder(){
+        showAllMember();
+        try {
+            Scanner sc = new Scanner(System.in);
+            ArrayList<Order> list = Order.allOrder;
+            System.out.printf("Enter the member ID of the order: ");
+            String inputId = sc.nextLine();
+            System.out.printf("|%-10s|%-15s|%-15s|%-15s|%-15s|%-15s", "OrderId ", "MemberId", "Date", "Total", "Status",
+                    "Product");
+            System.out.println();
+            for (Order order : list) {
+                if (order.getMemberId().equals(inputId))
+                    System.out.printf("|%-10s|%-15s|%-15s|%-15s|%-15s", order.getOrderId(), order.getMemberId(),
+                            order.getOrderDate(),
+                            order.getTotal(), order.getStatus());
+            }
+        } catch (Exception e) {
+            System.out.println();
+            System.out.println("Invalid member ID!");
         }
     }
 

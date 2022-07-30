@@ -13,7 +13,7 @@ import Wishlist.Wishlist;
 public class Member extends Guest {
     public static ArrayList<Member> allMember = new ArrayList<>();
     private final String memberId;
-    private String memberName;
+    private final String memberName;
     private String memberPassword;
     private String memberPhone;
     private String memberEmail;
@@ -106,12 +106,14 @@ public class Member extends Guest {
                 System.out.println();
                 System.out.println("Choose what you want to do: ");
                 System.out.println("1: Your Info");
-                System.out.println("2: Show all items by details: ");
+                System.out.println("2: Show all items by details");
                 System.out.println("3: Show items by category");
                 System.out.println("4: Show items by price");
                 System.out.println("5: Create an order");
-                System.out.println("6: Create your wishlist");
-                System.out.println("7: View your wishlist");
+                System.out.println("6: View an order");
+                System.out.println("7: Create your wishlist");
+                System.out.println("8: View your wishlist");
+                System.out.println("9: Edit your profile");
                 System.out.println("0: Logout");
                 System.out.println();
                 System.out.print("Your input: ");
@@ -130,9 +132,13 @@ public class Member extends Guest {
                 } else if (input == 5) {
                     orderProcess();
                 } else if (input == 6) {
-                    createWishlist();
+                    viewOrder();
                 } else if (input == 7) {
+                    createWishlist();
+                } else if (input == 8) {
                     viewWishList();
+                } else if (input == 9) {
+                    editProfile();
                 } else {
                     System.out.println("Invalid Input");
                 }
@@ -229,6 +235,33 @@ public class Member extends Guest {
         }
     }
 
+    public void viewOrder() {
+        try {
+            Scanner sc = new Scanner(System.in);
+            ArrayList<Order> list = Order.allOrder;
+            System.out.print("Enter an order ID: ");
+            String input = sc.nextLine();
+//            Order userOrder = null;
+            System.out.printf("|%-10s|%-15s|%-15s|%-15s|%-15s|%-15s", "OrderId ", "MemberId", "Date", "Total", "Status",
+                    "Product");
+            System.out.println();
+            for (Order order : list) {
+                if (order.getOrderId().equals(input))
+//                    userOrder= order;
+                    System.out.printf("|%-10s|%-15s|%-15s|%-15s|%-15s|%-15s", order.getOrderId(), order.getMemberId(), order.getOrderDate(),
+                    order.getTotal(), order.getStatus(), order.getItems());
+            }
+//            System.out.println(userOrder);
+        } catch (Exception e) {
+            System.out.println();
+            System.out.println("Invalid order ID!");
+        }
+    }
+
+    public void createAndWriteVoucher(){
+
+    }
+
     public void createWishlist() {
         Scanner sc = new Scanner(System.in);
         ArrayList<Product> wishList = new ArrayList<>();
@@ -305,9 +338,13 @@ public class Member extends Guest {
                     line = line.replace("ï»¿", "");
                 }
                 String[] row = line.split(",");
+
+                System.out.printf("|%-10s|%-10s", "Your ID", "Product");
+                System.out.println();
+
                 for (String index : row) {
                     if (row[0].equals(memberId)) {
-                        System.out.printf("%-10s", index);
+                        System.out.printf("|%-10s", index);
                     }
                 }
                 System.out.println();
@@ -411,4 +448,9 @@ public class Member extends Guest {
             System.out.println("Something went wrong");
         }
     }
+
+    public static void editProfile() {
+
+    }
+
 }
