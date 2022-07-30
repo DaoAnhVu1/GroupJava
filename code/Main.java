@@ -28,8 +28,6 @@ public class Main {
             System.out.println("4: Show all items by category");
             System.out.println("5: Show all items by price");
             System.out.println("0: Exit");
-//            System.out.println(Product.allProduct.toString());
-//            System.out.println(Product.productMap.toString());
             System.out.println();
             int input = sc.nextInt();
             System.out.println();

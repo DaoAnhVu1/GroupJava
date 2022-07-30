@@ -242,6 +242,7 @@ public class Member extends Guest {
             ArrayList<Order> list = Order.allOrder;
             System.out.print("Enter an order ID: ");
             String input = sc.nextLine();
+            System.out.println();
 
             System.out.printf("|%-10s|%-15s|%-15s|%-15s|%-15s|%-15s", "OrderId ", "MemberId", "Date", "Total", "Status",
                     "Product");
@@ -263,6 +264,10 @@ public class Member extends Guest {
                     }
                     System.out.println();
 
+                } else {
+                    System.out.println();
+                    System.out.println("There is no order from this ID");
+                    return;
                 }
 
             }

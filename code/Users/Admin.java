@@ -23,7 +23,7 @@ public class Admin extends Guest {
             System.out.println("5: Change product's price");
             System.out.println("6: Add new product");
             System.out.println("7: Remove product");
-            System.out.println("8: View all order");
+            System.out.println("8: View order");
             System.out.println("9: Change order status");
             System.out.println("0: Logout");
             System.out.println();
@@ -81,14 +81,14 @@ public class Admin extends Guest {
                 return;
             }
 
-            String choosenCategory = Product.categoryList.get(inputCategory - 1);
-            ArrayList<Product> choosenList = Product.productMap.get(choosenCategory);
+            String chosenCategory = Product.categoryList.get(inputCategory - 1);
+            ArrayList<Product> chosenList = Product.productMap.get(chosenCategory);
             indexToShow = 1;
 
             System.out.printf("|%-10s|%-25s|%-15s|%-15s|%-5ss", "Number ", "Name", "Price", "Category", "Quantity");
             System.out.println();
 
-            for (Product product : choosenList) {
+            for (Product product : chosenList) {
                 System.out.printf("|%-10s|%-25s|%-15.0f|%-15s|%-5s", indexToShow, product.getProductName(),
                         product.getProductPrice(), product.getProductCategory(), product.getProductQuantity());
                 indexToShow += 1;
@@ -99,7 +99,7 @@ public class Admin extends Guest {
             int indexChosenProduct = sc.nextInt();
             System.out.println();
 
-            Product chosenProduct = choosenList.get(indexChosenProduct - 1);
+            Product chosenProduct = chosenList.get(indexChosenProduct - 1);
             System.out.print("Enter the new price: ");
             double newPrice = sc.nextDouble();
             System.out.println();
@@ -107,11 +107,11 @@ public class Admin extends Guest {
             chosenProduct.setProductPrice(newPrice);
 
             try {
-                FileWriter fw = new FileWriter("./data/" + choosenCategory + ".csv");
+                FileWriter fw = new FileWriter("./data/" + chosenCategory + ".csv");
                 BufferedWriter bw = new BufferedWriter(fw);
                 PrintWriter pw = new PrintWriter(bw);
 
-                for (Product product : choosenList) {
+                for (Product product : chosenList) {
                     pw.println(product.getProductId() + "," + product.getProductName() + "," + product.getProductPrice()
                             + "," + product.getProductQuantity());
                 }
@@ -277,6 +277,10 @@ public class Admin extends Guest {
                         System.out.print(" : " + order.getItems().get(product) + " ");
                     }
                     System.out.println();
+                } else {
+                    System.out.println();
+                    System.out.println("There is no order from this ID");
+                    return;
                 }
 
             }
@@ -324,8 +328,15 @@ public class Admin extends Guest {
             } else {
                 System.out.print("Enter the new status (paid or processing): ");
                 String newStatus = sc.nextLine();
-                System.out.println();
-                chosenOrder.setStatus(newStatus);
+                if (newStatus.equals("paid") || newStatus.equals("processing")) {
+                    System.out.println();
+                    chosenOrder.setStatus(newStatus);
+                } else {
+                    System.out.println();
+                    System.out.println("Wrong status");
+                    return;
+                }
+
             }
 
             try {
