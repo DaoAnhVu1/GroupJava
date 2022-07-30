@@ -1,10 +1,9 @@
 package Users;
 
 import java.io.*;
-import java.lang.reflect.Array;
 import java.util.*;
 import java.text.SimpleDateFormat;
-
+import java.util.UUID;
 import Order.Order;
 import Products.Product;
 import Wishlist.Wishlist;
@@ -105,12 +104,13 @@ public class Member extends Guest {
                 System.out.println();
                 System.out.println("Choose what you want to do: ");
                 System.out.println("1: Your Info");
-                System.out.println("2: Show all items by details: ");
+                System.out.println("2: Show all items by details ");
                 System.out.println("3: Show items by category");
                 System.out.println("4: Show items by price");
                 System.out.println("5: Create an order");
                 System.out.println("6: Create your wishlist");
                 System.out.println("7: View your wishlist");
+                System.out.println("8: View an order");
                 System.out.println("0: Logout");
                 System.out.println();
                 System.out.print("Your input: ");
@@ -132,6 +132,8 @@ public class Member extends Guest {
                     createWishlist();
                 } else if (input == 7) {
                     viewWishList();
+                } else if (input == 8) {
+                    viewOrder();
                 } else {
                     System.out.println("Invalid Input");
                 }
@@ -227,6 +229,29 @@ public class Member extends Guest {
         }
     }
 
+    public void viewOrder() {
+        try {
+            Scanner sc = new Scanner(System.in);
+            ArrayList<Order> list = Order.allOrder;
+            System.out.print("Enter your order ID: ");
+            String input = sc.nextLine();
+            Order userOrder = null;
+            for (Order order : list) {
+                if (order.getOrderId().equals(input))
+                    userOrder= order;
+            }
+            System.out.printf("|%-10s|%-15s|%-15s|%-15s|%-15s|%-15s", "OrderId ", "MemberId", "Date", "Total", "Status",
+                    "Product");
+            System.out.println(userOrder);
+        } catch (Exception e) {
+            System.out.println();
+            System.out.println("Invalid order ID!");
+        }
+    }
+
+    public void createAndWriteVoucher(){
+
+    }
     public void createWishlist() {
         Scanner sc = new Scanner(System.in);
         ArrayList<Product> wishList = new ArrayList<>();

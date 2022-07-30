@@ -7,7 +7,9 @@ import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.UUID;
 
+import Order.Order;
 import Products.Product;
+import jdk.swing.interop.SwingInterOpUtils;
 
 public class Admin extends Guest {
     public static void adminStart() {
@@ -23,6 +25,7 @@ public class Admin extends Guest {
             System.out.println("4: Show all items by price");
             System.out.println("5: Change product's price");
             System.out.println("6: Add new product");
+            System.out.println("7: View all order");
             System.out.println("0: Logout");
             System.out.println();
             System.out.printf("Your input: ");
@@ -42,6 +45,8 @@ public class Admin extends Guest {
                 Admin.changeProductPrice();
             } else if (input == 6) {
                 Admin.addNewProduct();
+            } else if (input == 7) {
+                viewAllOrder();
             }
         }
     }
@@ -167,7 +172,25 @@ public class Admin extends Guest {
             System.out.println("Something went wrong");
         }
     }
-
+    public static void viewAllOrder(){
+        try {
+            Scanner sc = new Scanner(System.in);
+            ArrayList<Order> list = Order.allOrder;
+            System.out.println("Enter the member ID of the order: ");
+            String inputId = sc.nextLine();
+            System.out.printf("|%-10s|%-15s|%-15s|%-15s|%-15s|%-15s", "OrderId ", "MemberId", "Date", "Total", "Status",
+                    "Product");
+            for (Order order : list) {
+                if (order.getMemberId().equals(inputId))
+                    System.out.printf("|%-10s|%-15s|%-15s|%-15s|%-15s", order.getOrderId(), order.getMemberId(),
+                        order.getOrderDate(),
+                        order.getTotal(), order.getStatus());
+            }
+        } catch (Exception e) {
+            System.out.println();
+            System.out.println("Invalid member ID!");
+        }
+    }
     public static void changeOrderStatus() {
             
     }
