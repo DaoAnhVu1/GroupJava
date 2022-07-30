@@ -269,19 +269,21 @@ public class Admin extends Guest {
                     String date = order.getOrderDate();
                     String total = Double.toString(order.getTotal());
                     String status = order.getStatus();
-                    HashMap<Product, Integer> cart = order.getItems();
 
-                    System.out.printf("|%-10s|%-15s|%-15s|%-15s|%-15s|%-15s", id, memberId, date, total, status,
-                            cart.keySet().stream().map(key -> key.getProductId() + ":" + cart.get(key)).collect(Collectors.joining(", ", "{", "}")));
+                    System.out.printf("|%-10s|%-15s|%-15s|%-15s|%-15s", id, memberId, date, total, status);
+                    for (Product product : order.getItems().keySet()) {
+                        System.out.printf("|%-20s", product.getProductName());
+                        System.out.print(" : " + order.getItems().get(product) + " ");
+                    }
                     System.out.println();
-
                 }
 
             }
 
         } catch (Exception e) {
-            System.out.println();
-            System.out.println("Invalid member ID!");
+            e.printStackTrace();
+            // System.out.println();
+            // System.out.println("Invalid member ID!");
         }
     }
 
