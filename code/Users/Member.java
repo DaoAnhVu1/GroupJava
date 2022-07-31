@@ -96,10 +96,6 @@ public class Member extends Guest {
         this.memberLevel = memberLevel;
     }
 
-    public void newPassword(String newPass) {
-        this.memberPassword = newPass;
-    }
-
     public void memberStart() {
         Scanner sc = new Scanner(System.in);
         System.out.println("Hello " + this.getMemberName());
@@ -484,16 +480,147 @@ public class Member extends Guest {
             while (true) {
 
                 int inputChange = sc.nextInt();
+                sc.nextLine();
 
                 if (inputChange == 1) {
                     System.out.printf("Enter your new password: ");
                     String newPass = sc.nextLine();
                     if (newPass != null) {
                         this.setMemberPassword(newPass);
+                        try {
+                            FileWriter fw = new FileWriter("./data/member.csv");
+                            BufferedWriter bw = new BufferedWriter(fw);
+                            PrintWriter pw = new PrintWriter(bw);
 
+                            for (Member member : allMember) {
+                                if (member.getMemberId().equals(this.getMemberId())) {
+                                    pw.println(
+                                            this.getMemberId() + "," + this.getMemberName() + "," + this.getMemberPassword() + ","
+                                                    + this.getMemberPhone() + "," + this.getMemberEmail() + ","
+                                                    + this.getMemberAddress() + "," + this.getMemberMoneySpent());
+                                } else {
+                                    pw.println(
+                                            member.getMemberId() + "," + member.getMemberName() + "," + member.getMemberPassword() + ","
+                                                    + member.getMemberPhone() + "," + member.getMemberEmail() + ","
+                                                    + member.getMemberAddress() + "," + member.getMemberMoneySpent());
+                                }
+                            }
+
+                            pw.flush();
+                            pw.close();
+                            System.out.println("Sucess");
+                        } catch (Exception e) {
+                            System.out.println("Something went wrong");
+                        }
+                        return;
                     } else {
                         System.out.println("Invalid input");
                     }
+                } else if (inputChange == 2) {
+                    System.out.printf("Enter your new phone: ");
+                    String newPhone = sc.nextLine();
+                    if (newPhone != null) {
+                        this.setMemberPhone(newPhone);
+                        try {
+                            FileWriter fw = new FileWriter("./data/member.csv");
+                            BufferedWriter bw = new BufferedWriter(fw);
+                            PrintWriter pw = new PrintWriter(bw);
+
+                            for (Member member : allMember) {
+                                if (member.getMemberId().equals(this.getMemberId())) {
+                                    pw.println(
+                                            this.getMemberId() + "," + this.getMemberName() + "," + this.getMemberPassword() + ","
+                                                    + this.getMemberPhone() + "," + this.getMemberEmail() + ","
+                                                    + this.getMemberAddress() + "," + this.getMemberMoneySpent());
+                                } else {
+                                    pw.println(
+                                            member.getMemberId() + "," + member.getMemberName() + "," + member.getMemberPassword() + ","
+                                                    + member.getMemberPhone() + "," + member.getMemberEmail() + ","
+                                                    + member.getMemberAddress() + "," + member.getMemberMoneySpent());
+                                }
+                            }
+
+                            pw.flush();
+                            pw.close();
+                            System.out.println("Sucess");
+                        } catch (Exception e) {
+                            System.out.println("Something went wrong");
+                        }
+                        return;
+                    } else {
+                        System.out.println("Invalid input");
+                    }
+                } else if (inputChange == 3) {
+                    System.out.printf("Enter your new email: ");
+                    String newEmail = sc.nextLine();
+                    if (newEmail != null) {
+                        this.setMemberEmail(newEmail);
+                        try {
+                            FileWriter fw = new FileWriter("./data/member.csv");
+                            BufferedWriter bw = new BufferedWriter(fw);
+                            PrintWriter pw = new PrintWriter(bw);
+
+                            for (Member member : allMember) {
+                                if (member.getMemberId().equals(this.getMemberId())) {
+                                    pw.println(
+                                            this.getMemberId() + "," + this.getMemberName() + "," + this.getMemberPassword() + ","
+                                                    + this.getMemberPhone() + "," + this.getMemberEmail() + ","
+                                                    + this.getMemberAddress() + "," + this.getMemberMoneySpent());
+                                } else {
+                                    pw.println(
+                                            member.getMemberId() + "," + member.getMemberName() + "," + member.getMemberPassword() + ","
+                                                    + member.getMemberPhone() + "," + member.getMemberEmail() + ","
+                                                    + member.getMemberAddress() + "," + member.getMemberMoneySpent());
+                                }
+                            }
+
+                            pw.flush();
+                            pw.close();
+                            System.out.println("Sucess");
+                        } catch (Exception e) {
+                            System.out.println("Something went wrong");
+                        }
+                        return;
+                    } else {
+                        System.out.println("Invalid input");
+                    }
+                } else if (inputChange == 4) {
+                    System.out.printf("Enter your new address: ");
+                    String newAddress = sc.nextLine();
+                    if (newAddress != null) {
+                        this.setMemberAddress(newAddress);
+                        System.out.println("Success");
+                        try {
+                            FileWriter fw = new FileWriter("./data/member.csv");
+                            BufferedWriter bw = new BufferedWriter(fw);
+                            PrintWriter pw = new PrintWriter(bw);
+
+                            for (Member member : allMember) {
+                                if (member.getMemberId().equals(this.getMemberId())) {
+                                    pw.println(
+                                            this.getMemberId() + "," + this.getMemberName() + "," + this.getMemberPassword() + ","
+                                                    + this.getMemberPhone() + "," + this.getMemberEmail() + ","
+                                                    + this.getMemberAddress() + "," + this.getMemberMoneySpent());
+                                } else {
+                                    pw.println(
+                                            member.getMemberId() + "," + member.getMemberName() + "," + member.getMemberPassword() + ","
+                                                    + member.getMemberPhone() + "," + member.getMemberEmail() + ","
+                                                    + member.getMemberAddress() + "," + member.getMemberMoneySpent());
+                                }
+                            }
+
+                            pw.flush();
+                            pw.close();
+                            System.out.println("Sucess");
+                        } catch (Exception e) {
+                            System.out.println("Something went wrong");
+                        }
+                        return;
+                    } else {
+                        System.out.println("Invalid input");
+                    }
+                } else {
+                    System.out.println("Invalid input");
                 }
             }
 
