@@ -493,17 +493,10 @@ public class Member extends Guest {
                             PrintWriter pw = new PrintWriter(bw);
 
                             for (Member member : allMember) {
-                                if (member.getMemberId().equals(this.getMemberId())) {
-                                    pw.println(
-                                            this.getMemberId() + "," + this.getMemberName() + "," + this.getMemberPassword() + ","
-                                                    + this.getMemberPhone() + "," + this.getMemberEmail() + ","
-                                                    + this.getMemberAddress() + "," + this.getMemberMoneySpent());
-                                } else {
-                                    pw.println(
-                                            member.getMemberId() + "," + member.getMemberName() + "," + member.getMemberPassword() + ","
-                                                    + member.getMemberPhone() + "," + member.getMemberEmail() + ","
-                                                    + member.getMemberAddress() + "," + member.getMemberMoneySpent());
-                                }
+                                pw.println(
+                                        member.getMemberId() + "," + member.getMemberName() + "," + member.getMemberPassword() + ","
+                                                + member.getMemberPhone() + "," + member.getMemberEmail() + ","
+                                                + member.getMemberAddress() + "," + member.getMemberMoneySpent());
                             }
 
                             pw.flush();
@@ -527,17 +520,10 @@ public class Member extends Guest {
                             PrintWriter pw = new PrintWriter(bw);
 
                             for (Member member : allMember) {
-                                if (member.getMemberId().equals(this.getMemberId())) {
-                                    pw.println(
-                                            this.getMemberId() + "," + this.getMemberName() + "," + this.getMemberPassword() + ","
-                                                    + this.getMemberPhone() + "," + this.getMemberEmail() + ","
-                                                    + this.getMemberAddress() + "," + this.getMemberMoneySpent());
-                                } else {
-                                    pw.println(
-                                            member.getMemberId() + "," + member.getMemberName() + "," + member.getMemberPassword() + ","
-                                                    + member.getMemberPhone() + "," + member.getMemberEmail() + ","
-                                                    + member.getMemberAddress() + "," + member.getMemberMoneySpent());
-                                }
+                                pw.println(
+                                        member.getMemberId() + "," + member.getMemberName() + "," + member.getMemberPassword() + ","
+                                                + member.getMemberPhone() + "," + member.getMemberEmail() + ","
+                                                + member.getMemberAddress() + "," + member.getMemberMoneySpent());
                             }
 
                             pw.flush();
@@ -561,17 +547,10 @@ public class Member extends Guest {
                             PrintWriter pw = new PrintWriter(bw);
 
                             for (Member member : allMember) {
-                                if (member.getMemberId().equals(this.getMemberId())) {
-                                    pw.println(
-                                            this.getMemberId() + "," + this.getMemberName() + "," + this.getMemberPassword() + ","
-                                                    + this.getMemberPhone() + "," + this.getMemberEmail() + ","
-                                                    + this.getMemberAddress() + "," + this.getMemberMoneySpent());
-                                } else {
-                                    pw.println(
-                                            member.getMemberId() + "," + member.getMemberName() + "," + member.getMemberPassword() + ","
-                                                    + member.getMemberPhone() + "," + member.getMemberEmail() + ","
-                                                    + member.getMemberAddress() + "," + member.getMemberMoneySpent());
-                                }
+                                pw.println(
+                                        member.getMemberId() + "," + member.getMemberName() + "," + member.getMemberPassword() + ","
+                                                + member.getMemberPhone() + "," + member.getMemberEmail() + ","
+                                                + member.getMemberAddress() + "," + member.getMemberMoneySpent());
                             }
 
                             pw.flush();
@@ -596,17 +575,10 @@ public class Member extends Guest {
                             PrintWriter pw = new PrintWriter(bw);
 
                             for (Member member : allMember) {
-                                if (member.getMemberId().equals(this.getMemberId())) {
-                                    pw.println(
-                                            this.getMemberId() + "," + this.getMemberName() + "," + this.getMemberPassword() + ","
-                                                    + this.getMemberPhone() + "," + this.getMemberEmail() + ","
-                                                    + this.getMemberAddress() + "," + this.getMemberMoneySpent());
-                                } else {
-                                    pw.println(
-                                            member.getMemberId() + "," + member.getMemberName() + "," + member.getMemberPassword() + ","
-                                                    + member.getMemberPhone() + "," + member.getMemberEmail() + ","
-                                                    + member.getMemberAddress() + "," + member.getMemberMoneySpent());
-                                }
+                                pw.println(
+                                        member.getMemberId() + "," + member.getMemberName() + "," + member.getMemberPassword() + ","
+                                                + member.getMemberPhone() + "," + member.getMemberEmail() + ","
+                                                + member.getMemberAddress() + "," + member.getMemberMoneySpent());
                             }
 
                             pw.flush();
