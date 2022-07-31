@@ -2,7 +2,6 @@ package Users;
 
 import java.io.*;
 import java.util.*;
-import java.util.stream.Collectors;
 
 import Products.Product;
 import Order.Order;
@@ -142,7 +141,7 @@ public class Admin extends Guest {
             int inputCategory = sc.nextInt();
             sc.nextLine();
             System.out.println();
-            String choosenCategory = Product.categoryList.get(inputCategory - 1);
+            String chosenCategory = Product.categoryList.get(inputCategory - 1);
 
             System.out.print("Enter the name: ");
             String productName = sc.nextLine();
@@ -157,7 +156,7 @@ public class Admin extends Guest {
             String id = UUID.randomUUID().toString().substring(0, 8);
 
             try {
-                FileWriter fw = new FileWriter("./data/" + choosenCategory + ".csv", true);
+                FileWriter fw = new FileWriter("./data/" + chosenCategory + ".csv", true);
                 BufferedWriter bw = new BufferedWriter(fw);
                 PrintWriter pw = new PrintWriter(bw);
 
@@ -168,7 +167,7 @@ public class Admin extends Guest {
                 e.printStackTrace();
             }
 
-            Product newProduct = new Product(id, productName, Double.parseDouble(productPrice), choosenCategory,
+            Product newProduct = new Product(id, productName, Double.parseDouble(productPrice), chosenCategory,
                     Integer.parseInt(productQuantity));
             System.out.println("Success");
         } catch (Exception e) {

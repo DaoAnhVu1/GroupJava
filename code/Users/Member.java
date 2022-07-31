@@ -1,11 +1,8 @@
 package Users;
 
 import java.io.*;
-import java.lang.reflect.Array;
-import java.sql.SQLOutput;
 import java.util.*;
 import java.text.SimpleDateFormat;
-import java.util.stream.Collectors;
 
 import Order.Order;
 import Products.Product;
@@ -99,6 +96,10 @@ public class Member extends Guest {
         this.memberLevel = memberLevel;
     }
 
+    public void newPassword(String newPass) {
+        this.memberPassword = newPass;
+    }
+
     public void memberStart() {
         Scanner sc = new Scanner(System.in);
         System.out.println("Hello " + this.getMemberName());
@@ -185,15 +186,15 @@ public class Member extends Guest {
                     return;
                 }
 
-                String choosenCategory = Product.categoryList.get(inputCategory - 1);
-                allChosenCategory.add(choosenCategory);
-                ArrayList<Product> choosenList = Product.productMap.get(choosenCategory);
+                String chosenCategory = Product.categoryList.get(inputCategory - 1);
+                allChosenCategory.add(chosenCategory);
+                ArrayList<Product> chosenList = Product.productMap.get(chosenCategory);
                 indexToShow = 1;
 
                 System.out.printf("|%-10s|%-25s|%-15s|%-15s|%-5ss", "Number ", "Name", "Price", "Category", "Quantity");
                 System.out.println();
 
-                for (Product product : choosenList) {
+                for (Product product : chosenList) {
                     System.out.printf("|%-10s|%-25s|%-15.0f|%-15s|%-5s", indexToShow, product.getProductName(),
                             product.getProductPrice(), product.getProductCategory(), product.getProductQuantity());
                     indexToShow += 1;
@@ -203,11 +204,11 @@ public class Member extends Guest {
                 System.out.print("Choose a product: ");
                 int indexChosenProduct = sc.nextInt();
                 System.out.println();
-                if (!(indexChosenProduct > 0 && indexChosenProduct <= indexChosenProduct)) {
+                if (!(indexChosenProduct > 0 && indexChosenProduct <= chosenList.size())) {
                     System.out.println("Invalid input");
                     return;
                 }
-                Product chosenProduct = choosenList.get(indexChosenProduct - 1);
+                Product chosenProduct = chosenList.get(indexChosenProduct - 1);
 
                 System.out.print("How many do you want to buy ? ");
                 int quantity = sc.nextInt();
@@ -469,8 +470,36 @@ public class Member extends Guest {
         }
     }
 
-    public static void editProfile() {
+    public void editProfile() {
+
+        try {
+            Scanner sc = new Scanner(System.in);
+            System.out.println("Chose what you want to change");
+            System.out.println("1: Your password");
+            System.out.println("2: Your phone");
+            System.out.println("3: Your email");
+            System.out.println("4: Your address");
+            System.out.printf("Enter: ");
+
+            while (true) {
+
+                int inputChange = sc.nextInt();
+
+                if (inputChange == 1) {
+                    System.out.printf("Enter your new password: ");
+                    String newPass = sc.nextLine();
+                    if (newPass != null) {
+                        this.setMemberPassword(newPass);
+
+                    } else {
+                        System.out.println("Invalid input");
+                    }
+                }
+            }
+
+        } catch (Exception e) {
+            System.out.println("Something went wrong");
+        }
 
     }
-
 }
