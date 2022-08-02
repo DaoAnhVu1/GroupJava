@@ -241,13 +241,14 @@ public class Member extends Guest {
             String input = sc.nextLine();
             System.out.println();
 
-            System.out.printf("|%-10s|%-15s|%-15s|%-15s|%-15s|%-15s", "OrderId ", "MemberId", "Date", "Total", "Status",
-                    "Product");
-            System.out.println();
+            boolean found = false;
 
             for (Order order : list) {
                 if (order.getOrderId().equals(input)) {
-
+                    System.out.printf("|%-10s|%-15s|%-15s|%-15s|%-15s|%-15s", "OrderId ", "MemberId", "Date", "Total", "Status",
+                            "Product");
+                    System.out.println();
+                    found = true;
                     String id = order.getOrderId();
                     String memberId = order.getMemberId();
                     String date = order.getOrderDate();
@@ -260,13 +261,13 @@ public class Member extends Guest {
                         System.out.print(" : " + order.getItems().get(product) + " ");
                     }
                     System.out.println();
-
-                } else {
-                    System.out.println();
-                    System.out.println("There is no order from this ID");
-                    return;
+                return;
                 }
 
+            }
+
+            if (!found) {
+                System.out.println("There is no order with this ID");
             }
 
         } catch (Exception e) {
