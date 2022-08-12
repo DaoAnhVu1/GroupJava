@@ -60,7 +60,8 @@ public class Admin extends Guest {
             System.out.println("Password: " + member.getMemberPassword());
             System.out.println("Email: " + member.getMemberEmail());
             System.out.println("Address: " + member.getMemberAddress());
-            System.out.println("Spent: " + member.getMemberMoneySpent());
+            System.out.printf("Spent: %.0f",member.getMemberMoneySpent());
+            System.out.println();
             System.out.println("Level: " + member.getMemberLevel());
             System.out.println();
         }
