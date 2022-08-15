@@ -20,7 +20,7 @@ public class Member extends Guest {
     private String memberLevel;
 
     public Member(String memberId, String memberName, String memberPassword, String memberPhone,
-                  String memberEmail, String memberAddress, double memberMoneySpent) {
+            String memberEmail, String memberAddress, double memberMoneySpent) {
         this.memberId = memberId;
         this.memberName = memberName;
         this.memberPassword = memberPassword;
@@ -250,7 +250,8 @@ public class Member extends Guest {
 
             for (Order order : list) {
                 if (order.getOrderId().equals(input)) {
-                    System.out.printf("|%-10s|%-15s|%-15s|%-15s|%-15s|%-15s", "OrderId ", "MemberId", "Date", "Total", "Status",
+                    System.out.printf("|%-10s|%-15s|%-15s|%-15s|%-15s|%-15s", "OrderId ", "MemberId", "Date", "Total",
+                            "Status",
                             "Product");
                     System.out.println();
                     found = true;
@@ -281,7 +282,7 @@ public class Member extends Guest {
         }
     }
 
-    public void createAndWriteVoucher(){
+    public void createAndWriteVoucher() {
 
     }
 
@@ -356,31 +357,38 @@ public class Member extends Guest {
 
         try {
             reader = new BufferedReader(new FileReader(filePath));
+            System.out.printf("|%-10s|%-10s", "Your ID", "Product");
+            System.out.println();
+            System.out.printf("|%-10s", memberId);
             while ((line = reader.readLine()) != null) {
                 if (line.contains("ï»¿")) {
                     line = line.replace("ï»¿", "");
                 }
                 String[] row = line.split(",");
-
-                System.out.printf("|%-10s|%-10s", "Your ID", "Product");
-                System.out.println();
-
-                for (String index : row) {
-                    if (row[0].equals(memberId)) {
-                        System.out.printf("|%-10s", index);
+                if (row[0].equals(memberId)) {
+                    for (int i = 1; i < row.length; i++) {
+                        for (Product product : Product.allProduct) {
+                            if (product.getProductId().equals(row[i])) {
+                                System.out.printf("|%-20s", product.getProductName());
+                                break;
+                            }
+                        }
                     }
+                    System.out.println();
+                    break;
+                } else {
+                    continue;
                 }
-                System.out.println();
             }
             reader.close();
-
         } catch (Exception e) {
-            e.printStackTrace();
+            System.out.println("There is something wrong");
         }
 
     }
 
-    public void createAndWriteOrder(String memberId, String memberLevel, HashMap<Product, Integer> cart, ArrayList<String> allChosenCategory) {
+    public void createAndWriteOrder(String memberId, String memberLevel, HashMap<Product, Integer> cart,
+            ArrayList<String> allChosenCategory) {
         String orderId = UUID.randomUUID().toString().substring(0, 8);
         Date thisDate = new Date();
         SimpleDateFormat dateForm = new SimpleDateFormat("dd/MM/Y");
@@ -431,7 +439,8 @@ public class Member extends Guest {
                 PrintWriter pw = new PrintWriter(bw);
 
                 for (Product product : Product.productMap.get(chosenCategory)) {
-                    pw.println(product.getProductId()+","+product.getProductName()+","+product.getProductPrice()+","+product.getProductQuantity());
+                    pw.println(product.getProductId() + "," + product.getProductName() + "," + product.getProductPrice()
+                            + "," + product.getProductQuantity());
                 }
                 pw.flush();
                 pw.close();
@@ -500,7 +509,8 @@ public class Member extends Guest {
 
                             for (Member member : allMember) {
                                 pw.println(
-                                        member.getMemberId() + "," + member.getMemberName() + "," + member.getMemberPassword() + ","
+                                        member.getMemberId() + "," + member.getMemberName() + ","
+                                                + member.getMemberPassword() + ","
                                                 + member.getMemberPhone() + "," + member.getMemberEmail() + ","
                                                 + member.getMemberAddress() + "," + member.getMemberMoneySpent());
                             }
@@ -527,7 +537,8 @@ public class Member extends Guest {
 
                             for (Member member : allMember) {
                                 pw.println(
-                                        member.getMemberId() + "," + member.getMemberName() + "," + member.getMemberPassword() + ","
+                                        member.getMemberId() + "," + member.getMemberName() + ","
+                                                + member.getMemberPassword() + ","
                                                 + member.getMemberPhone() + "," + member.getMemberEmail() + ","
                                                 + member.getMemberAddress() + "," + member.getMemberMoneySpent());
                             }
@@ -554,7 +565,8 @@ public class Member extends Guest {
 
                             for (Member member : allMember) {
                                 pw.println(
-                                        member.getMemberId() + "," + member.getMemberName() + "," + member.getMemberPassword() + ","
+                                        member.getMemberId() + "," + member.getMemberName() + ","
+                                                + member.getMemberPassword() + ","
                                                 + member.getMemberPhone() + "," + member.getMemberEmail() + ","
                                                 + member.getMemberAddress() + "," + member.getMemberMoneySpent());
                             }
@@ -582,7 +594,8 @@ public class Member extends Guest {
 
                             for (Member member : allMember) {
                                 pw.println(
-                                        member.getMemberId() + "," + member.getMemberName() + "," + member.getMemberPassword() + ","
+                                        member.getMemberId() + "," + member.getMemberName() + ","
+                                                + member.getMemberPassword() + ","
                                                 + member.getMemberPhone() + "," + member.getMemberEmail() + ","
                                                 + member.getMemberAddress() + "," + member.getMemberMoneySpent());
                             }

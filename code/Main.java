@@ -15,43 +15,51 @@ public class Main {
         loadProductData("./data/CPU.csv");
         loadProductData("./data/GPU.csv");
         loadProductData("./data/HardDrive.csv");
+        loadProductData("./data/headphones.csv");
+        loadProductData("./data/keyboard.csv");
         loadMemberData();
         loadOrderData();
         Scanner sc = new Scanner(System.in);
         System.out.println("Please choose one of the following options");
 
         while (true) {
-            System.out.println();
-            System.out.println("1: Login and proceed");
-            System.out.println("2: Register");
-            System.out.println("3: Show all items and details");
-            System.out.println("4: Show all items by category");
-            System.out.println("5: Show all items by price");
-            System.out.println("0: Exit");
-            System.out.println();
-            int input = sc.nextInt();
-            System.out.println();
-            if (input == 0) {
-                System.exit(0);
-            } else if (input == 1) {
-                int typeOfUser = Login.start();
-                if (typeOfUser == -2) {
-                    Admin.adminStart();
-                } else if (typeOfUser == -1) {
-                    System.out.println("No user found");
-                } else {
-                    Member currentUser = Member.allMember.get(typeOfUser);
-                    currentUser.memberStart();
+            try {
+                System.out.println();
+                System.out.println("1: Login and proceed");
+                System.out.println("2: Register");
+                System.out.println("3: Show all items and details");
+                System.out.println("4: Show all items by category");
+                System.out.println("5: Show all items by price");
+                System.out.println("0: Exit");
+                System.out.println();
+                int input = sc.nextInt();
+                System.out.println();
+                if (input == 0) {
+                    System.exit(0);
+                } else if (input == 1) {
+                    int typeOfUser = Login.start();
+                    if (typeOfUser == -2) {
+                        Admin.adminStart();
+                    } else if (typeOfUser == -1) {
+                        System.out.println("No user found");
+                    } else {
+                        Member currentUser = Member.allMember.get(typeOfUser);
+                        currentUser.memberStart();
+                    }
+                } else if (input == 2) {
+                    Register.start();
+                } else if (input == 3) {
+                    Guest.showAllItemsDetails();
+                } else if (input == 4) {
+                    Guest.showAllItemsCategory();
+                } else if (input == 5) {
+                    Guest.showAllItemsByPrice();
                 }
-            } else if (input == 2) {
-                Register.start();
-            } else if (input == 3) {
-                Guest.showAllItemsDetails();
-            } else if (input == 4) {
-                Guest.showAllItemsCategory();
-            } else if (input == 5) {
-                Guest.showAllItemsByPrice();
+            } catch (Exception e) {
+                System.out.println("Invalid input");
+                sc.nextLine();
             }
+
         }
     }
 
@@ -109,7 +117,7 @@ public class Main {
         }
     }
 
-    public static void loadOrderData () {
+    public static void loadOrderData() {
         String filePath = "./data/Order.csv";
         BufferedReader reader = null;
         String line = "";
