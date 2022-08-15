@@ -142,6 +142,7 @@ public class Member extends Guest {
                 }
             } catch (Exception e) {
                 System.out.println();
+                sc.nextLine();
                 System.out.println("Something went wrong");
             }
         }
@@ -196,10 +197,14 @@ public class Member extends Guest {
                     indexToShow += 1;
                     System.out.println();
                 }
-
+                System.out.println();
+                System.out.println("Enter 0 to go back");
                 System.out.print("Choose a product: ");
                 int indexChosenProduct = sc.nextInt();
                 System.out.println();
+                if (indexChosenProduct == 0) {
+                    continue;
+                }
                 if (!(indexChosenProduct > 0 && indexChosenProduct <= chosenList.size())) {
                     System.out.println("Invalid input");
                     return;
@@ -241,32 +246,33 @@ public class Member extends Guest {
             String input = sc.nextLine();
             System.out.println();
 
-            System.out.printf("|%-10s|%-15s|%-15s|%-15s|%-15s|%-15s", "OrderId ", "MemberId", "Date", "Total", "Status",
-                    "Product");
-            System.out.println();
+            boolean found = false;
 
             for (Order order : list) {
                 if (order.getOrderId().equals(input)) {
-
+                    System.out.printf("|%-10s|%-15s|%-15s|%-15s|%-15s|%-15s", "OrderId ", "MemberId", "Date", "Total", "Status",
+                            "Product");
+                    System.out.println();
+                    found = true;
                     String id = order.getOrderId();
                     String memberId = order.getMemberId();
                     String date = order.getOrderDate();
-                    String total = Double.toString(order.getTotal());
+                    Double total = order.getTotal();
                     String status = order.getStatus();
 
-                    System.out.printf("|%-10s|%-15s|%-15s|%-15s|%-15s", id, memberId, date, total, status);
+                    System.out.printf("|%-10s|%-15s|%-15s|%-15.0f|%-15s", id, memberId, date, total, status);
                     for (Product product : order.getItems().keySet()) {
                         System.out.printf("|%-20s", product.getProductName());
                         System.out.print(" : " + order.getItems().get(product) + " ");
                     }
                     System.out.println();
-
-                } else {
-                    System.out.println();
-                    System.out.println("There is no order from this ID");
                     return;
                 }
 
+            }
+
+            if (!found) {
+                System.out.println("There is no order with this ID");
             }
 
         } catch (Exception e) {
@@ -434,6 +440,8 @@ public class Member extends Guest {
             System.out.println("Something went wrong");
         }
 
+        System.out.println("Your OrderID: " + orderId);
+        System.out.println("Please save this ID if you want to view it later");
         try {
             // Write to member
             FileWriter fw = new FileWriter("./data/member.csv");
@@ -475,13 +483,11 @@ public class Member extends Guest {
             System.out.println("2: Your phone");
             System.out.println("3: Your email");
             System.out.println("4: Your address");
-            System.out.printf("Enter: ");
 
             while (true) {
-
+                System.out.printf("Enter: ");
                 int inputChange = sc.nextInt();
                 sc.nextLine();
-
                 if (inputChange == 1) {
                     System.out.printf("Enter your new password: ");
                     String newPass = sc.nextLine();
@@ -595,7 +601,6 @@ public class Member extends Guest {
                     System.out.println("Invalid input");
                 }
             }
-
         } catch (Exception e) {
             System.out.println("Something went wrong");
         }

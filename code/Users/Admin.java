@@ -58,6 +58,11 @@ public class Admin extends Guest {
             System.out.println("ID: " + member.getMemberId());
             System.out.println("Name: " + member.getMemberName());
             System.out.println("Password: " + member.getMemberPassword());
+            System.out.println("Email: " + member.getMemberEmail());
+            System.out.println("Address: " + member.getMemberAddress());
+            System.out.printf("Spent: %.0f",member.getMemberMoneySpent());
+            System.out.println();
+            System.out.println("Level: " + member.getMemberLevel());
             System.out.println();
         }
     }
@@ -257,12 +262,16 @@ public class Admin extends Guest {
             System.out.printf("Enter the member ID of the order: ");
             String inputId = sc.nextLine();
             System.out.println();
+            boolean found = false;
+
             System.out.printf("|%-10s|%-15s|%-15s|%-15s|%-15s|%-15s", "OrderId ", "MemberId", "Date", "Total", "Status",
                     "Product");
             System.out.println();
 
             for (Order order : list) {
                 if (order.getMemberId().equals(inputId)) {
+
+                    found = true;
 
                     String id = order.getOrderId();
                     String memberId = order.getMemberId();
@@ -276,12 +285,13 @@ public class Admin extends Guest {
                         System.out.print(" : " + order.getItems().get(product) + " ");
                     }
                     System.out.println();
-                } else {
-                    System.out.println();
-                    System.out.println("There is no order from this ID");
-                    return;
                 }
 
+            }
+
+            if (!found) {
+                System.out.println();
+                System.out.println("There is no order with this ID");
             }
 
         } catch (Exception e) {
