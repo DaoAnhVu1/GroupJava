@@ -217,6 +217,11 @@ public class Member extends Guest {
 
                 int currentQuantity = chosenProduct.getProductQuantity();
 
+                if (currentQuantity - quantity < 0) {
+                    System.out.println("Not enough in stock");
+                    continue;
+                }
+
                 chosenProduct.setProductQuantity(currentQuantity - quantity);
                 cart.put(chosenProduct, quantity);
 
@@ -336,7 +341,7 @@ public class Member extends Guest {
             BufferedWriter bw = new BufferedWriter(fw);
             PrintWriter pw = new PrintWriter(bw);
 
-            String result = memberId + ",";
+            String result = this.memberId + ",";
 
             for (Product product : wishList) {
                 result = result.concat(product.getProductId() + ",");
@@ -586,7 +591,6 @@ public class Member extends Guest {
                     String newAddress = sc.nextLine();
                     if (newAddress != null) {
                         this.setMemberAddress(newAddress);
-                        System.out.println("Success");
                         try {
                             FileWriter fw = new FileWriter("./data/member.csv");
                             BufferedWriter bw = new BufferedWriter(fw);
