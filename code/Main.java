@@ -20,6 +20,16 @@ public class Main {
         loadMemberData();
         loadOrderData();
         Scanner sc = new Scanner(System.in);
+        System.out.println();
+        System.out.println("COSC2081 GROUP ASSIGNMENT"
+                + "\nSTORE ORDER MANAGEMENT SYSTEM"
+                + "\nInstructor: Mr. Minh Vu"
+                + "\nGroup: Group 14"
+                + "\ns3925921, Nguyen Dinh Khai"
+                + "\ns3926187, Dao Anh Vu"
+                + "\ns3925982, Bui Khac Tien"
+                + "\ns3926873, Truong Hoang Tuan Kiet");
+        System.out.println();
         System.out.println("Please choose one of the following options");
 
         while (true) {
