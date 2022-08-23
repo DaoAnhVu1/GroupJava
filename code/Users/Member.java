@@ -148,6 +148,7 @@ public class Member extends Guest {
         }
     }
 
+    //Function 2: View all of their information
     public void showAllInfo() {
         System.out.println("Name: " + this.getMemberName());
         System.out.println("Phone: " + this.getMemberPhone());
@@ -156,6 +157,7 @@ public class Member extends Guest {
         System.out.println("Status: " + this.getMemberLevel());
     }
 
+    //Processing the order
     public void orderProcess() {
         HashMap<Product, Integer> cart = new HashMap<>();
         ArrayList<String> allChosenCategory = new ArrayList<>();
@@ -243,6 +245,7 @@ public class Member extends Guest {
         }
     }
 
+    //Function 7: get information of an order using order ID
     public void viewOrder() {
         try {
             Scanner sc = new Scanner(System.in);
@@ -287,10 +290,7 @@ public class Member extends Guest {
         }
     }
 
-    public void createAndWriteVoucher() {
-
-    }
-
+    //Additional feature: wishlist
     public void createWishlist() {
         Scanner sc = new Scanner(System.in);
         ArrayList<Product> wishList = new ArrayList<>();
@@ -333,6 +333,7 @@ public class Member extends Guest {
 
     }
 
+    //Additional feature: wishlist
     public void writeWishlist(String memberID, ArrayList<Product> wishList) {
 
         try {
@@ -355,6 +356,7 @@ public class Member extends Guest {
         }
     }
 
+    //Additional feature: wishlist
     public void viewWishList() {
         String filePath = "./data/wishlist.csv";
         BufferedReader reader = null;
@@ -392,6 +394,7 @@ public class Member extends Guest {
 
     }
 
+    //Function 6: create a new order
     public void createAndWriteOrder(String memberId, String memberLevel, HashMap<Product, Integer> cart,
             ArrayList<String> allChosenCategory) {
         String orderId = UUID.randomUUID().toString().substring(0, 8);
@@ -488,6 +491,7 @@ public class Member extends Guest {
         }
     }
 
+    //Additional feature: edit the member's profile
     public void editProfile() {
 
         try {

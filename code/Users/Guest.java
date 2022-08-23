@@ -6,6 +6,7 @@ import java.util.Scanner;
 import Products.Product;
 
 public abstract class Guest {
+    //Function 3: list all product and view the product details
     public static void showAllItemsDetails() {
         System.out.printf("|%-10s|%-25s|%-15s|%-15s|%-10s", "Number ", "Name", "Price", "Category", "Quantity");
         int index = 1;
@@ -21,6 +22,7 @@ public abstract class Guest {
         System.out.println();
     }
 
+    //Function 4: search for all available products for a particular category
     public static void showAllItemsCategory() {
         int categoryIndex = 1;
         int productIndex = 1;
@@ -49,6 +51,7 @@ public abstract class Guest {
         }
     }
 
+    //Function 5: sort all products by product price
     public static void showAllItemsByPrice() {
         ArrayList<Product> allItemsList = new ArrayList<>();
         for (String category : Product.productMap.keySet()) {
@@ -71,6 +74,7 @@ public abstract class Guest {
 
     }
 
+    //Function 5: sort all products by product price
     public static void quicksortPrice(ArrayList<Product> list, int lowIndex, int highIndex) {
         if (lowIndex >= highIndex) {
             return;

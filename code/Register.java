@@ -6,6 +6,8 @@ import java.util.UUID;
 
 import Users.Member;
 
+
+//Function 1: register to become a member
 public class Register {
     public static void start() {
         String id = UUID.randomUUID().toString().substring(0,8);

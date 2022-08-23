@@ -11,6 +11,7 @@ public class Admin extends Guest {
     public static void adminStart() {
         Scanner sc = new Scanner(System.in);
 
+        //Admin selection menu
         while (true) {
             System.out.println();
             System.out.println("Welcome ADMIN");
@@ -53,6 +54,7 @@ public class Admin extends Guest {
         }
     }
 
+    //Function 8: Admin view information of all members
     public static void showAllMember() {
         for (Member member : Member.allMember) {
             System.out.println("ID: " + member.getMemberId());
@@ -67,6 +69,7 @@ public class Admin extends Guest {
         }
     }
 
+    //Function 10: Admin can update price for a particular product
     public static void changeProductPrice() {
         Scanner sc = new Scanner(System.in);
         int indexToShow = 1;
@@ -134,6 +137,7 @@ public class Admin extends Guest {
 
     }
 
+    //Function 9: Admin can add a new product to the store
     public static void addNewProduct() {
         try {
             Scanner sc = new Scanner(System.in);
@@ -180,6 +184,7 @@ public class Admin extends Guest {
         }
     }
 
+    //Additional feature: remove the product
     public static void removeProduct() {
         try {
             Scanner sc = new Scanner(System.in);
@@ -254,6 +259,7 @@ public class Admin extends Guest {
         }
     }
 
+    //Function 11: Admin view information of all orders by customer ID
     public static void viewAllOrder() {
         showAllMember();
         try {
@@ -301,6 +307,7 @@ public class Admin extends Guest {
         }
     }
 
+    //Function 12: Admin can change the status of the order
     public static void changeOrderStatus() {
         try {
             Scanner sc = new Scanner(System.in);

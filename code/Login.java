@@ -2,6 +2,7 @@ import java.util.Scanner;
 
 import Users.Member;
 
+//Function 2: Login with the registered username and password
 public class Login {
     public static int start() {
         Scanner sc = new Scanner(System.in);
@@ -13,6 +14,7 @@ public class Login {
         System.out.println();
         int indexOfUser = 0;
 
+        //Function 8: Admin can login with a predefined username and password
         if (userName.equals("admin") && password.equals("adminpassword")) {
             return -2;
         }

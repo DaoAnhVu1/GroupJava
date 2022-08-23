@@ -21,6 +21,8 @@ public class Main {
         loadOrderData();
         Scanner sc = new Scanner(System.in);
         System.out.println();
+
+        //The welcome screen as in the requirements
         System.out.println("COSC2081 GROUP ASSIGNMENT"
                 + "\nSTORE ORDER MANAGEMENT SYSTEM"
                 + "\nInstructor: Mr. Minh Vu"
@@ -32,6 +34,7 @@ public class Main {
         System.out.println();
         System.out.println("Please choose one of the following options");
 
+        //The store function selection
         while (true) {
             try {
                 System.out.println();
