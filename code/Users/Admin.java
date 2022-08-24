@@ -267,12 +267,7 @@ public class Admin extends Guest {
             ArrayList<Order> list = Order.allOrder;
             System.out.printf("Enter the member ID of the order: ");
             String inputId = sc.nextLine();
-            System.out.println();
             boolean found = false;
-
-            System.out.printf("|%-10s|%-15s|%-15s|%-15s|%-15s|%-15s", "OrderId ", "MemberId", "Date", "Total", "Status",
-                    "Product");
-            System.out.println();
 
             for (Order order : list) {
                 if (order.getMemberId().equals(inputId)) {
@@ -284,6 +279,10 @@ public class Admin extends Guest {
                     String date = order.getOrderDate();
                     String total = Double.toString(order.getTotal());
                     String status = order.getStatus();
+
+                    System.out.printf("|%-10s|%-15s|%-15s|%-15s|%-15s|%-15s", "OrderId ", "MemberId", "Date", "Total", "Status",
+                            "Product");
+                    System.out.println();
 
                     System.out.printf("|%-10s|%-15s|%-15s|%-15s|%-15s", id, memberId, date, total, status);
                     for (Product product : order.getItems().keySet()) {
