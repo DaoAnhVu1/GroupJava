@@ -5,7 +5,7 @@ import java.util.Scanner;
 
 import Products.Product;
 
-public abstract class Guest {
+public class Guest {
     //Function 3: list all product and view the product details
     public static void showAllItemsDetails() {
         System.out.printf("|%-10s|%-25s|%-15s|%-15s|%-10s", "Number ", "Name", "Price", "Category", "Quantity");
@@ -74,8 +74,8 @@ public abstract class Guest {
 
     }
 
-    //Function 5: sort all products by product price
-    public static void quicksortPrice(ArrayList<Product> list, int lowIndex, int highIndex) {
+    //Helper Function: sort all products by product price (at the time of doing this, we did not know how to compare by using Comparator)
+    private static void quicksortPrice(ArrayList<Product> list, int lowIndex, int highIndex) {
         if (lowIndex >= highIndex) {
             return;
         }
@@ -101,7 +101,8 @@ public abstract class Guest {
         quicksortPrice(list, leftPointer+1, highIndex);
     }
     
-    public static void swap(ArrayList<Product> list, int firstIndex, int secondIndex) {
+    // Helper Function: swap two object at the given index
+    private static void swap(ArrayList<Product> list, int firstIndex, int secondIndex) {
         Product temp = list.get(firstIndex);
         list.set(firstIndex, list.get(secondIndex));
         list.set(secondIndex, temp);

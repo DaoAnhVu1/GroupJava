@@ -11,6 +11,7 @@ import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
+        // Store Data
         loadProductData("./data/Console.csv");
         loadProductData("./data/CPU.csv");
         loadProductData("./data/GPU.csv");
@@ -34,7 +35,7 @@ public class Main {
         System.out.println();
         System.out.println("Please choose one of the following options");
 
-        //The store function selection
+        //The store selection function
         while (true) {
             try {
                 System.out.println();
