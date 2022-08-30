@@ -225,7 +225,16 @@ public class Member extends Guest {
                 }
 
                 chosenProduct.setProductQuantity(currentQuantity - quantity);
+                if (cart.containsKey(chosenProduct)) {
+                    cart.put(chosenProduct, quantity += cart.get(chosenProduct));
+                }
                 cart.put(chosenProduct, quantity);
+
+                System.out.println("Your cart: ");
+                cart.entrySet().forEach(entry -> {
+                    System.out.println(entry.getKey().getProductName() + ": " + entry.getValue());
+                });
+                System.out.println();
 
                 System.out.print("If you wish to continue, press 1, else press any other number: ");
                 int proceed = sc.nextInt();

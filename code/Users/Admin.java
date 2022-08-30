@@ -25,6 +25,7 @@ public class Admin extends Guest {
             System.out.println("7: Remove product");
             System.out.println("8: View order");
             System.out.println("9: Change order status");
+            System.out.println("10: View revenue");
             System.out.println("0: Logout");
             System.out.println();
             System.out.printf("Your input: ");
@@ -50,6 +51,8 @@ public class Admin extends Guest {
                 viewAllOrder();
             } else if (input == 9) {
                 Admin.changeOrderStatus();
+            } else if (input == 10) {
+                Admin.viewRevenue();
             }
         }
     }
@@ -385,4 +388,42 @@ public class Admin extends Guest {
 
     }
 
+    public static void viewRevenue() {
+        try {
+            int index = 0;
+            double totalDay = 0;
+            double total = 0;
+            ArrayList<Order> list = Order.allOrder;
+            ArrayList<String> dates = new ArrayList<>();
+            HashMap<String, Double> dayRevenue = new HashMap<>();
+
+            for (Order order : list) {
+                if (!dates.contains(order.getOrderDate())) {
+                    dates.add(order.getOrderDate());
+                }
+            }
+
+            while (index < dates.toArray().length) {
+                for (Order order : list) {
+                    if (dates.get(index).equals(order.getOrderDate())) {
+                        totalDay += order.getTotal();
+                    }
+                    dayRevenue.put(dates.get(index), totalDay);
+                }
+                totalDay = 0;
+                index += 1;
+            }
+
+            for (String key : dayRevenue.keySet()){
+                System.out.println(key+ ": " + dayRevenue.get(key));
+                total += dayRevenue.get(key);
+            }
+
+            System.out.println("Total revenue: " + total);
+
+
+        } catch (Exception e) {
+            System.out.println("Something went wrong");
+        }
+    }
 }
