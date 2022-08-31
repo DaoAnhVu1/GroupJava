@@ -1,6 +1,7 @@
 package Users;
 
 import java.io.*;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 import Products.Product;
@@ -388,39 +389,26 @@ public class Admin extends Guest {
 
     }
 
+    //Calculate the store total revenue  at the end of the day
     public static void viewRevenue() {
         try {
-            int index = 0;
-            double totalDay = 0;
             double total = 0;
             ArrayList<Order> list = Order.allOrder;
-            ArrayList<String> dates = new ArrayList<>();
-            HashMap<String, Double> dayRevenue = new HashMap<>();
 
+            Date thisDate = new Date();
+            SimpleDateFormat dateForm = new SimpleDateFormat("dd/MM/Y");
+            String dateString = dateForm.format(thisDate);
             for (Order order : list) {
-                if (!dates.contains(order.getOrderDate())) {
-                    dates.add(order.getOrderDate());
+                if (dateString.equals(order.getOrderDate())) {
+                    total += order.getTotal();
                 }
             }
-
-            while (index < dates.toArray().length) {
-                for (Order order : list) {
-                    if (dates.get(index).equals(order.getOrderDate())) {
-                        totalDay += order.getTotal();
-                    }
-                    dayRevenue.put(dates.get(index), totalDay);
-                }
-                totalDay = 0;
-                index += 1;
+            if (total != 0) {
+                System.out.println("Revenue of today: " + total);
+            } else {
+                System.out.println("There is no order from today");
+                System.out.println("Revenue: 0");
             }
-
-            for (String key : dayRevenue.keySet()){
-                System.out.println(key+ ": " + dayRevenue.get(key));
-                total += dayRevenue.get(key);
-            }
-
-            System.out.println("Total revenue: " + total);
-
 
         } catch (Exception e) {
             System.out.println("Something went wrong");
