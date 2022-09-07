@@ -399,7 +399,7 @@ public class Admin extends Guest {
             SimpleDateFormat dateForm = new SimpleDateFormat("dd/MM/Y");
             String dateString = dateForm.format(thisDate);
             for (Order order : list) {
-                if (dateString.equals(order.getOrderDate())) {
+                if (dateString.equals(order.getOrderDate()) && order.getStatus().equals("paid")) {
                     total += order.getTotal();
                 }
             }
