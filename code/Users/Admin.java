@@ -276,6 +276,10 @@ public class Admin extends Guest {
             String inputId = sc.nextLine();
             boolean found = false;
 
+            System.out.printf("|%-10s|%-15s|%-15s|%-15s|%-15s|%-15s", "OrderId ", "MemberId", "Date", "Total", "Status",
+                    "Product");
+            System.out.println();
+
             for (Order order : list) {
                 if (order.getMemberId().equals(inputId)) {
 
@@ -286,10 +290,6 @@ public class Admin extends Guest {
                     String date = order.getOrderDate();
                     String total = Double.toString(order.getTotal());
                     String status = order.getStatus();
-
-                    System.out.printf("|%-10s|%-15s|%-15s|%-15s|%-15s|%-15s", "OrderId ", "MemberId", "Date", "Total", "Status",
-                            "Product");
-                    System.out.println();
 
                     System.out.printf("|%-10s|%-15s|%-15s|%-15s|%-15s", id, memberId, date, total, status);
                     for (Product product : order.getItems().keySet()) {
