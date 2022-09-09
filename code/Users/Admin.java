@@ -63,7 +63,6 @@ public class Admin extends Guest {
         for (Member member : Member.allMember) {
             System.out.println("ID: " + member.getMemberId());
             System.out.println("Name: " + member.getMemberName());
-            System.out.println("Password: " + member.getMemberPassword());
             System.out.println("Email: " + member.getMemberEmail());
             System.out.println("Address: " + member.getMemberAddress());
             System.out.printf("Spent: %.0f",member.getMemberMoneySpent());
@@ -265,7 +264,11 @@ public class Admin extends Guest {
 
     //Function 11: Admin view information of all orders by customer ID
     public static void viewAllOrder() {
-        showAllMember();
+        for (Member member : Member.allMember) {
+            System.out.println("ID: " + member.getMemberId());
+            System.out.println("Name: " + member.getMemberName());
+            System.out.println();
+        }
         try {
             Scanner sc = new Scanner(System.in);
             ArrayList<Order> list = Order.allOrder;

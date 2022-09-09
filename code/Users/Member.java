@@ -304,7 +304,13 @@ public class Member extends Guest {
         Scanner sc = new Scanner(System.in);
         ArrayList<Product> wishList = new ArrayList<>();
         ArrayList<Integer> inputList = new ArrayList<>();
-        Guest.showAllItemsDetails();
+        int index = 1;
+        for (Product product : Product.allProduct) {
+            System.out.printf("|%-10s|%-25s|%-15.0f|%-15s|%-5s", index, product.getProductName(),
+                    product.getProductPrice(), product.getProductCategory(), product.getProductQuantity());
+            index += 1;
+            System.out.println();
+        }
 
         System.out.println();
 
@@ -336,7 +342,7 @@ public class Member extends Guest {
         if (wishList.isEmpty()) {
             System.out.println("Your wishlist is empty");
         } else {
-            Wishlist newWishList = new Wishlist(this.memberId, wishList);
+            Wishlist newWishList = new Wishlist(this.getMemberId(), wishList);
             writeWishlist(this.getMemberId(), wishList);
         }
 
