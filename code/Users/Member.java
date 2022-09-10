@@ -376,18 +376,20 @@ public class Member extends Guest {
         String filePath = "./data/wishlist.csv";
         BufferedReader reader = null;
         String line = "";
+        boolean found = false;
 
         try {
             reader = new BufferedReader(new FileReader(filePath));
-            System.out.printf("|%-10s|%-10s", "Your ID", "Product");
-            System.out.println();
-            System.out.printf("|%-10s", memberId);
             while ((line = reader.readLine()) != null) {
                 if (line.contains("ï»¿")) {
                     line = line.replace("ï»¿", "");
                 }
                 String[] row = line.split(",");
-                if (row[0].equals(memberId)) {
+                if (row[0].equals(this.getMemberId())) {
+                    found = true;
+                    System.out.printf("|%-10s|%-10s", "Your ID", "Product");
+                    System.out.println();
+                    System.out.printf("|%-10s", this.getMemberId());
                     for (int i = 1; i < row.length; i++) {
                         for (Product product : Product.allProduct) {
                             if (product.getProductId().equals(row[i])) {
@@ -397,10 +399,11 @@ public class Member extends Guest {
                         }
                     }
                     System.out.println();
-                    break;
-                } else {
-                    continue;
+
                 }
+            }
+            if (!found) {
+                System.out.println("Your wishlist is empty");
             }
             reader.close();
         } catch (Exception e) {
